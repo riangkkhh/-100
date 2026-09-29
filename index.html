@@ -1,0 +1,3982 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>צ'ופצ'יק</title>
+  <link rel="icon" href="./img/logo.jpg" type="image/jpeg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async></script>
+  <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+  <style>
+    :root {
+      --p: #2563eb;
+      --pl: #eff6ff;
+      --pd: #1d4ed8;
+      --ac: #06b6d4;
+      --sf: #f8fafc;
+      --sf2: #f1f5f9;
+      --bd: #e2e8f0;
+      --tx: #0f172a;
+      --t2: #64748b;
+      --t3: #94a3b8;
+      --dn: #ef4444;
+      --ok: #22c55e;
+      --wn: #f59e0b;
+      --sh: 0 1px 3px rgba(0, 0, 0, .08), 0 4px 16px rgba(0, 0, 0, .06);
+      --shl: 0 8px 32px rgba(0, 0, 0, .13);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--sf);
+      color: var(--tx);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* AUTH */
+    .aw {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+    }
+
+    .ac {
+      background: #fff;
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 420px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
+    }
+
+    .alo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .ali {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .alo h1 {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .alo p {
+      font-size: 13px;
+      color: var(--t2);
+      margin-top: 3px;
+    }
+
+    .fg {
+      margin-bottom: 15px;
+    }
+
+    .fg label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t2);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .fg input,
+    .fg textarea,
+    .fg select {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+      background: var(--sf);
+    }
+
+    .fg input:focus,
+    .fg textarea:focus,
+    .fg select:focus {
+      border-color: var(--p);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+    }
+
+    .btnp {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--p), var(--pd));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btnp:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, .35);
+    }
+
+
+    /* VIDEO */
+    .mvid {
+      max-width: 280px;
+      max-height: 180px;
+      border-radius: 10px;
+      margin: 5px 0;
+      display: block;
+      border: 1px solid var(--bd);
+    }
+
+    /* YouTube float player */
+    #ytPlayer {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      width: 320px;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+      z-index: 4000;
+      display: none;
+    }
+
+    #ytPlayer.open {
+      display: block;
+    }
+
+    #ytPlayer .yt-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    #ytPlayer .yt-close {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    #ytPlayer iframe {
+      width: 100%;
+      height: 180px;
+      display: block;
+      border: none;
+    }
+
+    /* YouTube preview button */
+    .yt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 7px;
+      padding: 7px 13px;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: opacity .15s;
+    }
+
+    .yt-btn:hover {
+      opacity: .85;
+    }
+
+    /* GOOGLE AUTH */
+    .google-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 14px 0;
+      color: var(--t3);
+      font-size: 12px;
+    }
+
+    .google-divider::before,
+    .google-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--bd);
+    }
+
+    .btn-google {
+      width: 100%;
+      padding: 11px;
+      background: #fff;
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: border-color .2s, box-shadow .2s;
+      color: var(--tx);
+    }
+
+    .btn-google:hover {
+      border-color: #4285f4;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, .12);
+    }
+
+    .btn-google svg {
+      flex-shrink: 0;
+    }
+
+    /* Google name picker overlay */
+    #googleNameScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #googleNameScreen.open {
+      display: flex;
+    }
+
+    .asw {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--t2);
+    }
+
+    .asw a {
+      color: var(--p);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .remr {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .remr input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--p);
+    }
+
+    .remr label {
+      font-size: 13px;
+      color: var(--t2);
+      cursor: pointer;
+    }
+
+    /* LAYOUT */
+    .app {
+      display: none;
+      height: 100vh;
+      flex-direction: row;
+    }
+
+    /* SIDEBAR */
+    .sb {
+      width: 280px;
+      background: #fff;
+      border-left: 1px solid var(--bd);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      flex-shrink: 0;
+    }
+
+    .sbh {
+      padding: 14px;
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .sblogo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--bd);
+      margin-bottom: 12px;
+    }
+
+    .sbld {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .sblogo span {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .upill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .upill:hover {
+      background: var(--sf);
+    }
+
+    .uav {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .uav img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sdot {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--ok);
+      border: 2px solid #fff;
+    }
+
+    .unm {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .ust {
+      font-size: 11px;
+      color: var(--t3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 130px;
+    }
+
+    .logbtn {
+      margin-right: auto;
+      background: none;
+      border: 1px solid var(--bd);
+      color: var(--t2);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .logbtn:hover {
+      border-color: var(--dn);
+      color: var(--dn);
+      background: #fef2f2;
+    }
+
+    .sbsrch {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .sbsrch input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid var(--bd);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      font-family: inherit;
+      background: var(--sf);
+    }
+
+    .sbsrch input:focus {
+      border-color: var(--p);
+    }
+
+    .tlist {
+      flex: 1;
+      overflow-y: auto;
+      padding: 7px;
+    }
+
+    .tlist::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .tlist::-webkit-scrollbar-thumb {
+      background: var(--bd);
+      border-radius: 4px;
+    }
+
+    .ti {
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 3px;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative;
+      border: 1.5px solid transparent;
+    }
+
+    .ti:hover {
+      background: var(--sf);
+    }
+
+    .ti.active {
+      background: var(--pl);
+      border-color: var(--p);
+    }
+
+    .ti.hasnew .tt {
+      font-weight: 700;
+    }
+
+    .ti.hasnew::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -4px;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dn);
+      border: 2px solid #fff;
+    }
+
+    .ti.pinned {
+      background: #fffbeb;
+      border-color: var(--wn);
+    }
+
+    .tt {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .tm {
+      font-size: 11px;
+      color: var(--t3);
+    }
+
+    .ntbtn {
+      margin: 8px;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .ntbtn:hover {
+      opacity: .9;
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      min-width: 0;
+    }
+
+    .chdr {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--bd);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .chdr h2 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .chdr p {
+      font-size: 12px;
+      color: var(--t2);
+    }
+
+    .hbtns {
+      display: flex;
+      gap: 5px;
+    }
+
+    .hbtn {
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1.5px solid var(--bd);
+      background: #fff;
+      border-radius: 7px;
+      cursor: pointer;
+      color: var(--t2);
+      font-family: inherit;
+      transition: all .15s;
+    }
+
+    .hbtn:hover {
+      border-color: var(--p);
+      color: var(--p);
+      background: var(--pl);
+    }
+
+    .hbtn.dn:hover {
+      border-color: var(--dn);
+      color: var(--dn);
+      background: #fef2f2;
+    }
+
+    /* MESSAGES */
+    .msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      background: var(--sf);
+    }
+
+    .msgs::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .msgs::-webkit-scrollbar-thumb {
+      background: var(--bd);
+      border-radius: 4px;
+    }
+
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--t2);
+      text-align: center;
+    }
+
+    .empty .ei {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: .4;
+    }
+
+    .empty h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--tx);
+      margin-bottom: 8px;
+    }
+
+    /* MESSAGE ROW */
+    .mrow {
+      display: flex;
+      gap: 0;
+      padding: 3px 0;
+      position: relative;
+    }
+
+    .mrow.own {
+      flex-direction: row-reverse;
+    }
+
+    .mrow.own .mbody {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .mrow.own .mhdr {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .mrow.own .reacts {
+      justify-content: flex-end;
+      align-self: flex-end;
+    }
+
+    .mrow.own .bubble {
+      border-radius: 16px 4px 16px 16px !important;
+      background: var(--pl) !important;
+      border-color: #bfdbfe !important;
+    }
+
+    .mrow.other .mbody {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .mrow .mfloat.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Floating actions - absolutely positioned, NO layout shift */
+    .mfloat {
+      position: absolute;
+      top: -16px;
+      right: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 30;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 20px;
+      padding: 4px 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      gap: 1px;
+      align-items: center;
+    }
+
+    .mrow.own .mfloat {
+      right: auto;
+      left: 8px;
+    }
+
+    .fab {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 3px 5px;
+      border-radius: 6px;
+      transition: background .12s;
+      color: var(--t2);
+      line-height: 1;
+    }
+
+    .fab:hover {
+      background: var(--sf2);
+    }
+
+    /* Avatar column */
+    .mavc {
+      width: 42px;
+      flex-shrink: 0;
+    }
+
+    .av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .15s;
+      margin-top: 2px;
+    }
+
+    .av:hover {
+      transform: scale(1.08);
+    }
+
+    .av img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Bubble side */
+    .mbody {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .mrow.own .bubble {
+      background: var(--pl);
+      border-color: #bfdbfe;
+      border-radius: 16px 4px 16px 16px;
+      align-self: flex-end;
+    }
+
+    .mhdr {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+      flex-wrap: wrap;
+    }
+
+    .mnm {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--p);
+    }
+
+    .mtime {
+      font-size: 11px;
+      color: var(--t3);
+    }
+
+    .mviews {
+      font-size: 11px;
+      color: var(--t3);
+    }
+
+    .medit {
+      font-size: 10px;
+      color: var(--t3);
+      font-style: italic;
+    }
+
+    .bubble {
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 4px 16px 16px 16px;
+      padding: 9px 13px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-break: break-word;
+      max-width: 560px;
+      align-self: flex-start;
+    }
+
+    .bubble.del {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--dn);
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .mimg {
+      max-width: 260px;
+      max-height: 180px;
+      border-radius: 10px;
+      margin: 5px 0;
+      cursor: zoom-in;
+      display: block;
+      border: 1px solid var(--bd);
+    }
+
+    .mimg:hover {
+      opacity: .9;
+    }
+
+    /* Quote */
+    .qblk {
+      background: var(--sf2);
+      border-right: 3px solid var(--p);
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: var(--t2);
+    }
+
+    .qblk .qa {
+      font-weight: 700;
+      color: var(--p);
+      margin-bottom: 2px;
+    }
+
+    /* Reactions */
+    .reacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 3px;
+      align-self: flex-start;
+    }
+
+    .mrow.own .reacts {
+      align-self: flex-end;
+    }
+
+    .rchip {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      border-radius: 20px;
+      padding: 1px 6px 1px 5px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s, background .12s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      line-height: 1.5;
+      color: var(--t2);
+    }
+
+    .rchip:hover {
+      transform: scale(1.12);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .rchip.mine {
+      background: var(--pl);
+      border-color: #bfdbfe;
+      color: var(--p);
+    }
+
+    .rchip .rc-count {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* Mention */
+    .mchip {
+      display: inline-block;
+      background: #dbeafe;
+      color: var(--p);
+      padding: 0 7px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* INPUT */
+    .iarea {
+      border-top: 1px solid var(--bd);
+      background: #fff;
+      padding: 10px 16px;
+      flex-shrink: 0;
+    }
+
+    .qbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--pl);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 7px 12px;
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: var(--p);
+    }
+
+    .qbarc {
+      margin-right: auto;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--t2);
+      font-size: 16px;
+    }
+
+    .iprev {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sf2);
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      padding: 7px 11px;
+      margin-bottom: 7px;
+    }
+
+    .iprev img {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .iprevn {
+      font-size: 12px;
+      color: var(--t2);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .iprevrm {
+      background: var(--dn);
+      color: #fff;
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .htgl {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 7px;
+    }
+
+    .htb {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1.5px solid var(--bd);
+      background: var(--sf);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--t2);
+      transition: all .15s;
+    }
+
+    .htb.act {
+      border-color: var(--p);
+      color: var(--p);
+      background: var(--pl);
+    }
+
+    .tbar {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 7px;
+      flex-wrap: wrap;
+    }
+
+    .tbtn {
+      padding: 5px 9px;
+      border-radius: 7px;
+      border: 1px solid var(--bd);
+      background: var(--sf);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--t2);
+      transition: all .15s;
+      font-family: inherit;
+    }
+
+    .tbtn:hover {
+      background: var(--pl);
+      border-color: var(--p);
+      color: var(--p);
+    }
+
+    .irow {
+      display: flex;
+      gap: 9px;
+      align-items: flex-end;
+    }
+
+    .minput {
+      flex: 1;
+      padding: 10px 13px;
+      border: 1.5px solid var(--bd);
+      border-radius: 12px;
+      resize: none;
+      font-family: inherit;
+      font-size: 14px;
+      min-height: 44px;
+      max-height: 120px;
+      outline: none;
+      transition: border-color .2s;
+      background: var(--sf);
+    }
+
+    .minput:focus {
+      border-color: var(--p);
+      background: #fff;
+    }
+
+    .sendbtn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .sendbtn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, .4);
+    }
+
+    .sendbtn:disabled {
+      background: var(--bd);
+      cursor: not-allowed;
+    }
+
+    .lckbar {
+      padding: 12px 20px;
+      background: #fffbeb;
+      border-top: 1px solid #fde68a;
+      text-align: center;
+      font-size: 13px;
+      color: var(--wn);
+      font-weight: 500;
+    }
+
+    /* MODALS */
+    .ovl {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .55);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ovl.open {
+      display: flex;
+    }
+
+    .mbox {
+      background: #fff;
+      border-radius: 18px;
+      padding: 26px;
+      width: 460px;
+      max-width: 94vw;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: var(--shl);
+      position: relative;
+      animation: mIn .18s ease;
+    }
+
+    .mbox.wide {
+      width: 700px;
+    }
+
+    .mbox.vwide {
+      width: 800px;
+    }
+
+    @keyframes mIn {
+      from {
+        opacity: 0;
+        transform: scale(.95) translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .mbox h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .mcl {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--sf);
+      border: none;
+      cursor: pointer;
+      font-size: 17px;
+      color: var(--t2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mcl:hover {
+      background: var(--sf2);
+    }
+
+    .mbtn {
+      padding: 9px 18px;
+      border-radius: 9px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .15s;
+    }
+
+    .mbtn.p {
+      background: var(--p);
+      color: #fff;
+    }
+
+    .mbtn.p:hover {
+      background: var(--pd);
+    }
+
+    .mbtn.d {
+      background: var(--dn);
+      color: #fff;
+    }
+
+    .mbtn.d:hover {
+      background: #dc2626;
+    }
+
+    .mbtn.s {
+      background: var(--ok);
+      color: #fff;
+    }
+
+    .mbtn.g {
+      background: var(--sf2);
+      color: var(--t2);
+    }
+
+    .mbtn.g:hover {
+      background: var(--bd);
+    }
+
+    /* Admin */
+    .atabs {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 18px;
+      background: var(--sf2);
+      padding: 4px;
+      border-radius: 10px;
+      flex-wrap: wrap;
+    }
+
+    .atab {
+      flex: 1;
+      min-width: 70px;
+      padding: 7px 5px;
+      border: none;
+      background: none;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--t2);
+      font-family: inherit;
+      transition: all .15s;
+    }
+
+    .atab.act {
+      background: #fff;
+      color: var(--p);
+      box-shadow: var(--sh);
+    }
+
+    .acnt {
+      display: none;
+    }
+
+    .acnt.act {
+      display: block;
+    }
+
+    .asec {
+      margin-bottom: 18px;
+    }
+
+    .asec h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--t2);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+    }
+
+    .arow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      margin-bottom: 5px;
+      background: #fff;
+      transition: border-color .15s;
+    }
+
+    .arow:hover {
+      border-color: var(--p);
+    }
+
+    .ari strong {
+      font-size: 13px;
+    }
+
+    .ari small {
+      font-size: 11px;
+      color: var(--t2);
+      display: block;
+    }
+
+    .abtns {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .stcard {
+      background: var(--pl);
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stval {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--p);
+    }
+
+    .stlbl {
+      font-size: 12px;
+      color: var(--t2);
+    }
+
+    .stgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .plbl {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 12px;
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+
+    .plbl:has(input:checked) {
+      border-color: var(--p);
+      background: var(--pl);
+    }
+
+    .plbl.blk:has(input:checked) {
+      border-color: var(--dn);
+      background: #fef2f2;
+    }
+
+    .plbl input {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .plbl input:not(.blk-inp) {
+      accent-color: var(--p);
+    }
+
+    .blk-inp {
+      accent-color: var(--dn);
+    }
+
+    .bpill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--pl);
+      color: var(--p);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    /* Reaction picker */
+    .rp {
+      position: fixed;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 7px;
+      box-shadow: var(--shl);
+      z-index: 2000;
+      display: none;
+      flex-wrap: wrap;
+      gap: 3px;
+      width: 192px;
+    }
+
+    .rp.open {
+      display: flex;
+    }
+
+    .rpe {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 4px;
+      transition: background .12s;
+    }
+
+    .rpe:hover {
+      background: var(--sf2);
+    }
+
+    /* Mention dropdown */
+    .mdd {
+      position: fixed;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 2000;
+      display: none;
+      box-shadow: var(--shl);
+      min-width: 190px;
+    }
+
+    .mdi {
+      padding: 9px 13px;
+      cursor: pointer;
+      font-size: 13px;
+      border-bottom: 1px solid var(--sf2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mdi:hover {
+      background: var(--pl);
+    }
+
+    .miav {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .miav img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Poll removed */
+    /* Profile tooltip */
+    .ptip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: var(--shl);
+      z-index: 3000;
+      display: none;
+      width: 230px;
+    }
+
+    .ptip-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .ptip-av {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--p), var(--ac));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 22px;
+    }
+
+    .ptip-av img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ptip-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ptip-name {
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+
+    .rbadge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .rb-super {
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: #fff;
+    }
+
+    .rb-admin {
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: #fff;
+    }
+
+    .rb-mod {
+      background: #fef9c3;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .rb-thread {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+
+    .rb-user {
+      background: var(--sf2);
+      color: var(--t2);
+      border: 1px solid var(--bd);
+    }
+
+    .ptip-status {
+      font-size: 12px;
+      color: var(--t2);
+      font-style: italic;
+      margin-top: 7px;
+      line-height: 1.4;
+    }
+
+    .ptip-joined {
+      font-size: 11px;
+      color: var(--t3);
+      margin-top: 5px;
+    }
+
+    /* Notification bell */
+    #nbell {
+      position: fixed;
+      top: 14px;
+      left: 18px;
+      z-index: 500;
+      display: none;
+      cursor: pointer;
+    }
+
+    .nbw {
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border: 1.5px solid var(--bd);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: var(--sh);
+      transition: border-color .15s;
+      position: relative;
+    }
+
+    .nbw:hover {
+      border-color: var(--p);
+    }
+
+    .nbb {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 18px;
+      height: 18px;
+      background: var(--dn);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      border: 2px solid #fff;
+    }
+
+    .np {
+      position: fixed;
+      top: 56px;
+      left: 14px;
+      width: 300px;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      box-shadow: var(--shl);
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      max-height: 380px;
+      overflow: hidden;
+    }
+
+    .np.open {
+      display: flex;
+    }
+
+    .nph {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--bd);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .npc {
+      font-size: 11px;
+      color: var(--p);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .nl {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .ni {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--sf2);
+      cursor: pointer;
+      transition: background .15s;
+      display: flex;
+      gap: 9px;
+    }
+
+    .ni:hover {
+      background: var(--pl);
+    }
+
+    .ni.unrd {
+      background: #f0f9ff;
+    }
+
+    .nico {
+      font-size: 17px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .nitx {
+      flex: 1;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .nitx b {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .nitime {
+      font-size: 10px;
+      color: var(--t3);
+    }
+
+    .nonot {
+      padding: 24px;
+      text-align: center;
+      color: var(--t3);
+      font-size: 13px;
+    }
+
+    /* Lightbox */
+    .lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .lb.open {
+      display: flex;
+    }
+
+    .lb img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+    }
+
+    /* CONTACT ADMIN */
+    #contactAdminBtn {
+      margin: 8px;
+      padding: 10px;
+      background: var(--sf2);
+      color: var(--t2);
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all .2s;
+    }
+
+    #contactAdminBtn:hover {
+      border-color: var(--p);
+      color: var(--p);
+      background: var(--pl);
+    }
+
+    /* MUTED THREADS */
+    .muted-section {
+      border-top: 1px solid var(--bd);
+      padding: 6px 8px;
+    }
+
+    .muted-toggle {
+      width: 100%;
+      padding: 7px 10px;
+      background: none;
+      border: none;
+      color: var(--t3);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: right;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 8px;
+      transition: background .15s;
+    }
+
+    .muted-toggle:hover {
+      background: var(--sf2);
+      color: var(--t2);
+    }
+
+    .muted-list {
+      padding: 2px 0;
+    }
+
+    .ti.muted {
+      opacity: 0.55;
+      filter: grayscale(0.4);
+    }
+
+    /* Scroll btn */
+    #scrollBtn {
+      position: fixed;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--p);
+      color: #fff;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shl);
+      z-index: 500;
+      display: none;
+      font-family: inherit;
+    }
+
+    /* Admin btn */
+    #adminBtn {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: var(--sh);
+      z-index: 100;
+      font-family: inherit;
+      display: none;
+      align-items: center;
+      gap: 5px;
+      transition: transform .15s;
+    }
+
+    #adminBtn:hover {
+      transform: translateY(-2px);
+    }
+
+    .err {
+      color: var(--dn);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .suc {
+      color: var(--ok);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media(max-width:768px) {
+      .sb {
+        position: fixed;
+        right: -100%;
+        z-index: 999;
+        transition: right .3s;
+        width: 280px;
+      }
+
+      .sb.open {
+        right: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- AUTH -->
+  <div id="authScreen" class="aw">
+    <div class="ac">
+      <div class="alo">
+        <div class="ali"><img src="./img/logo.jpg" alt="לוגו"
+            style="width:40px;height:40px;object-fit:contain;border-radius:10px;"></div>
+        <h1>צ'ופצ'יק</h1>
+        <p>פלטפורמת שיחה מתקדמת</p>
+      </div>
+      <div id="sec-login">
+        <p style="font-size:13px;color:var(--t2);text-align:center;margin-bottom:16px;">ניתן להתחבר רק דרך Google</p>
+        <button class="btn-google" onclick="doGoogleAuth()">
+          <svg width="20" height="20" viewBox="0 0 48 48">
+            <path fill="#EA4335"
+              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+            <path fill="#4285F4"
+              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+            <path fill="#FBBC05"
+              d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+            <path fill="#34A853"
+              d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+          </svg>
+          כניסה / הרשמה עם Google
+        </button>
+        <div id="lErr" class="err hidden" style="margin-top:12px;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- APP -->
+  <div id="appCon" class="app">
+    <div class="sb" id="sidebar">
+      <div class="sbh">
+        <div class="sblogo">
+          <div class="sbld" style="padding:0;overflow:hidden;background:none;"><img src="./img/logo.jpg" alt="לוגו"
+              style="width:32px;height:32px;object-fit:cover;border-radius:10px;display:block;"></div>
+          <span>צ'ופצ'יק</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div class="upill" onclick="showProfile()">
+            <div class="uav" id="uav">
+              <div class="sdot"></div>
+            </div>
+            <div style="min-width:0;">
+              <div class="unm" id="unm"></div>
+              <div class="ust" id="ust">ערוך פרופיל</div>
+            </div>
+          </div>
+          <button class="logbtn" onclick="doLogout()">יציאה</button>
+        </div>
+      </div>
+      <div class="sbsrch"><input id="srch" placeholder="חיפוש נושאים..." oninput="renderThreads(this.value)"></div>
+      <div id="tlist" class="tlist"></div>
+      <button id="ntbtn" class="ntbtn hidden" onclick="showNewThread()">＋ נושא חדש</button>
+      <button id="contactAdminBtn" onclick="showContactAdmin()">✉️ שלח הודעה למנהל</button>
+      <div class="muted-section hidden" id="mutedSection">
+        <button class="muted-toggle" onclick="toggleMutedList()">
+          <span id="mutedArrow">▸</span> 🔕 צ'אטים מושתקים (<span id="mutedCount">0</span>)
+        </button>
+        <div class="muted-list hidden" id="mutedList"></div>
+      </div>
+    </div>
+    <div class="main">
+      <div id="chdr" class="chdr hidden">
+        <div>
+          <h2 id="ctitle"></h2>
+          <p id="cdesc"></p>
+        </div>
+        <div id="hbtns" class="hbtns"></div>
+      </div>
+      <div id="msgs" class="msgs">
+        <div class="empty">
+          <div class="ei">💬</div>
+          <h3>ברוכים הבאים</h3>
+          <p>בחרו נושא לשיחה</p>
+        </div>
+      </div>
+      <div id="iarea" class="iarea hidden">
+        <div id="qbar" class="qbar hidden">💬 מצטט: <strong id="qfrom"></strong> — <span id="qtxt"></span><button
+            class="qbarc" onclick="clearQ()">×</button></div>
+        <div id="iprev" class="hidden"></div>
+        <div id="htgl" class="htgl hidden">
+          <button id="btnMd" class="htb act" onclick="setMode('md')">📝 רגיל</button>
+          <button id="btnHtml" class="htb" onclick="setMode('html')">🌐 HTML</button>
+        </div>
+        <div id="tbar" class="tbar"></div>
+        <div class="irow">
+          <textarea id="minput" class="minput" rows="1" placeholder="כתוב הודעה… (Enter לשליחה)"></textarea>
+          <button id="sbtn" class="sendbtn" disabled onclick="sendMsg()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="lckbar" class="lckbar hidden"></div>
+    </div>
+  </div>
+  <!-- MODALS -->
+  <div class="ovl" id="profModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('profModal')">×</button>
+      <h3>עריכת פרופיל</h3>
+      <div id="profNS"></div>
+      <div class="fg"><label>תמונת פרופיל</label><input type="file" id="profImg" accept="image/*"></div>
+      <div class="fg"><label>סטטוס (עד 60 תווים)</label><input type="text" id="profSt" maxlength="60"
+          placeholder='"משפט מעניין ☕"'></div>
+      <button class="mbtn p" onclick="saveProf()">שמור</button>
+    </div>
+  </div>
+  <div class="ovl" id="ntModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('ntModal')">×</button>
+      <h3>צור נושא חדש</h3>
+      <div class="fg"><label>כותרת</label><input type="text" id="ntTitle"></div>
+      <div class="fg"><label>תיאור</label><textarea id="ntDesc" rows="3"></textarea></div>
+      <button class="mbtn p" onclick="createThread()">צור</button>
+    </div>
+  </div>
+  <div class="ovl" id="nmrModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('nmrModal')">×</button>
+      <h3>בקשה לשינוי שם</h3>
+      <div class="fg"><label>שם חדש</label><input type="text" id="nmrN"></div>
+      <div class="fg"><label>סיבה</label><textarea id="nmrR" rows="3"></textarea></div>
+      <button class="mbtn p" onclick="submitNR()">שלח בקשה</button>
+    </div>
+  </div>
+
+  <div class="ovl" id="adminModal">
+    <div class="mbox vwide">
+      <button class="mcl" onclick="closeM('adminModal')">×</button>
+      <h3>🛡️ פאנל ניהול</h3>
+      <div class="atabs" id="atabs"></div>
+      <div id="atab-threads" class="acnt act">
+        <div class="asec">
+          <h4>צור נושא</h4>
+          <div class="fg"><input type="text" id="atTitle" placeholder="כותרת"></div>
+          <div class="fg"><textarea id="atDesc" rows="2" placeholder="תיאור"></textarea></div>
+          <button class="mbtn p" onclick="adCreateThread()">צור</button>
+        </div>
+        <div class="asec">
+          <h4>נושאים קיימים</h4>
+          <div id="atList"></div>
+        </div>
+      </div>
+      <div id="atab-users" class="acnt">
+        <div class="fg"><input type="text" id="ausSearch" placeholder="🔍 חפש..." oninput="renderAUsers()"></div>
+        <div id="auList"></div>
+      </div>
+      <div id="atab-perms" class="acnt">
+        <p style="font-size:13px;color:var(--t2);margin-bottom:12px;">בחר משתמש לעריכת הרשאות</p>
+        <div class="fg"><input type="text" id="apsSearch" placeholder="🔍 חפש..." oninput="renderPermList()"></div>
+        <div id="apList"></div>
+        <div id="apEditor" class="hidden" style="margin-top:16px;border-top:1px solid var(--bd);padding-top:16px;">
+          <h4 id="apTitle" style="font-size:14px;font-weight:700;margin-bottom:12px;"></h4>
+          <div id="apChecks"></div>
+          <div style="margin-top:12px;"><strong style="font-size:13px;display:block;margin-bottom:8px;">🚫 חסימה לפי
+              נושא</strong>
+            <div id="apBlocks"></div>
+          </div>
+          <button class="mbtn p" style="margin-top:12px;" onclick="savePerms()">שמור הרשאות</button>
+        </div>
+      </div>
+      <div id="atab-requests" class="acnt">
+        <div id="arList"></div>
+      </div>
+      <div id="atab-msgs" class="acnt">
+        <div class="asec">
+          <h4>שלח הודעה למשתמש</h4>
+          <div class="fg"><label>משתמש</label><select id="dmSel">
+              <option value="">-- בחר --</option>
+            </select></div>
+          <div class="fg"><label>הודעה</label><textarea id="dmTxt" rows="3"></textarea></div>
+          <button class="mbtn p" onclick="sendDM()">שלח</button>
+        </div>
+        <hr style="margin:16px 0;border:none;border-top:1px solid var(--bd);">
+        <div class="asec">
+          <h4>📢 הכרזה לנושאים</h4>
+          <div class="fg"><label>כותרת</label><input type="text" id="anTitle"></div>
+          <div class="fg"><label>תוכן</label><textarea id="anBody" rows="3"></textarea></div>
+          <div class="fg"><label>נושאים (ניתן לבחור כמה)</label><select id="anThreads" multiple
+              style="height:90px;"></select></div>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed var(--bd);">
+          <div style="background:var(--sf2);border-radius:10px;padding:12px;margin-bottom:12px;">
+            <div
+              style="font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">
+              ⏰ תזמון (אופציונלי)</div>
+            <div class="fg" style="margin-bottom:8px;">
+              <label>סוג תזמון</label>
+              <select id="schedType" onchange="onSchedTypeChange()">
+                <option value="now">שלח עכשיו</option>
+                <option value="once">פעם אחת — בזמן מסוים</option>
+                <option value="repeat">חוזר — כל X זמן</option>
+              </select>
+            </div>
+            <div id="schedOnce" class="hidden">
+              <div class="fg" style="margin-bottom:0;">
+                <label>תאריך ושעה</label>
+                <input type="datetime-local" id="schedDateTime">
+              </div>
+            </div>
+            <div id="schedRepeat" class="hidden">
+              <div style="display:flex;gap:8px;align-items:flex-end;">
+                <div class="fg" style="flex:1;margin-bottom:0;"><label>כל</label><input type="number" id="schedInterval"
+                    min="1" value="1" style="text-align:center;"></div>
+                <div class="fg" style="flex:1;margin-bottom:0;"><label>יחידת זמן</label>
+                  <select id="schedUnit">
+                    <option value="60">דקות</option>
+                    <option value="3600" selected>שעות</option>
+                    <option value="86400">ימים</option>
+                  </select>
+                </div>
+              </div>
+              <div class="fg" style="margin-top:8px;margin-bottom:0;">
+                <label>התחל בזמן (ריק = מיד)</label>
+                <input type="datetime-local" id="schedStartTime">
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="mbtn p" style="flex:1;" onclick="sendAnn()">📢 שלח / תזמן</button>
+          </div>
+        </div>
+        <hr style="margin:16px 0;border:none;border-top:1px solid var(--bd);">
+        <div class="asec">
+          <h4>⏰ הודעות מתוזמנות</h4>
+          <div id="schedList">
+            <p style="font-size:13px;color:var(--t3);padding:8px 0;">אין הודעות מתוזמנות</p>
+          </div>
+        </div>
+      </div>
+      <div id="atab-whitelist" class="acnt">
+        <div class="asec">
+          <h4>📧 מיילים מורשים להתחבר</h4>
+          <p style="font-size:12px;color:var(--t2);margin-bottom:12px;">רק מיילים שברשימה זו יוכלו להיכנס לאתר. מנהל
+            ראשי תמיד מורשה.</p>
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <input type="email" id="wlEmailInput" placeholder="example@gmail.com"
+              style="flex:1;padding:9px 12px;border:1.5px solid var(--bd);border-radius:9px;font-size:13px;outline:none;font-family:inherit;">
+            <button class="mbtn p" onclick="addToWhitelist()">הוסף</button>
+          </div>
+          <div id="wlList"></div>
+        </div>
+      </div>
+      <div id="atab-settings" class="acnt">
+        <div class="asec">
+          <h4>סטטיסטיקות</h4>
+          <div class="stgrid" id="aStats"></div>
+        </div>
+        <div class="asec">
+          <h4>פעולות</h4>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="mbtn p" onclick="exportData()">📥 ייצוא</button>
+            <button class="mbtn d" onclick="resetAll()">⚠️ איפוס</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thread Access Modal -->
+  <div class="ovl" id="accessModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('accessModal')">×</button>
+      <h3 id="accessModalTitle">ניהול גישה לנושא</h3>
+      <p style="font-size:13px;color:var(--t2);margin-bottom:14px;">כשנושא מוסתר, רק משתמשים שנבחרו כאן יוכלו לראות
+        אותו.</p>
+      <div class="fg"><label>הוסף גישה למשתמש</label>
+        <select id="accessUserSel" style="margin-bottom:8px;"></select>
+        <button class="mbtn p" onclick="grantAccess()" style="width:100%;">הוסף</button>
+      </div>
+      <div class="asec">
+        <h4>משתמשים עם גישה</h4>
+        <div id="accessList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join Request Modal -->
+  <div class="ovl" id="joinReqModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('joinReqModal')">×</button>
+      <h3>📩 בקשת הצטרפות לנושא</h3>
+      <p style="font-size:13px;color:var(--t2);margin-bottom:14px;" id="joinReqThreadName"></p>
+      <div class="fg"><label>למה תרצה להצטרף שוב?</label><textarea id="joinReqReason" rows="3"
+          placeholder="כתוב את הסיבה..."></textarea></div>
+      <button class="mbtn p" onclick="submitJoinReq()">שלח בקשה</button>
+    </div>
+  </div>
+
+  <!-- Contact Admin Modal -->
+  <div class="ovl" id="contactAdminModal">
+    <div class="mbox">
+      <button class="mcl" onclick="closeM('contactAdminModal')">×</button>
+      <h3>✉️ שלח הודעה למנהל</h3>
+      <div class="fg"><label>הודעה</label><textarea id="contactAdminTxt" rows="4"
+          placeholder="כתוב הודעתך..."></textarea></div>
+      <button class="mbtn p" onclick="sendContactAdmin()">שלח</button>
+    </div>
+  </div>
+  <!-- Lightbox -->
+  <div class="lb" id="lb" onclick="closeLB()"><img id="lbImg" src="" alt=""></div>
+  <!-- Profile tooltip -->
+  <div class="ptip" id="ptip" style="display:none;"></div>
+  <!-- Reaction picker -->
+  <div class="rp" id="rp">
+    <button class="rpe" data-e="👍">👍</button><button class="rpe" data-e="❤️">❤️</button>
+    <button class="rpe" data-e="😂">😂</button><button class="rpe" data-e="😮">😮</button>
+    <button class="rpe" data-e="😢">😢</button><button class="rpe" data-e="🔥">🔥</button>
+    <button class="rpe" data-e="👏">👏</button><button class="rpe" data-e="🎉">🎉</button>
+  </div>
+  <!-- Mention dropdown -->
+  <div class="mdd" id="mdd"></div>
+  <!-- Notification bell -->
+  <div id="nbell" onclick="toggleNP()">
+    <div class="nbw">🔔<div class="nbb hidden" id="nbb">0</div>
+    </div>
+  </div>
+  <div class="np" id="np">
+    <div class="nph">התראות <span class="npc" onclick="clearNotifs()">נקה הכל</span></div>
+    <div class="nl" id="nl"></div>
+  </div>
+  <button id="scrollBtn" onclick="scrollLast()">↓ הודעה אחרונה</button>
+  <button id="adminBtn" onclick="openAdmin()">🛡️ ניהול</button>
+  <input type="file" id="imgUpload" accept="image/*" style="display:none;">
+  <input type="file" id="vidUpload" accept="video/*" style="display:none;">
+  <script>
+    // ═══ STATE ═══
+    let CU = null, CT = null, threads = [], msgs = [], mentionUsers = [];
+    let quotedMsg = null, pendingImg = null, pendingVideo = null, inputMode = 'md', editingPermUid = null, lastMentionIdx = -1;
+
+    const SUPER_EMAIL = 'mont.b335@gmail.com';
+    const SUPER_PW = btoa('335385308');
+    const OFFENSIVE = ['סדרות', 'סרטים', 'סרטונים מעניינים'];
+    const STATUS_BAD = ['סדרות', 'סרטים'];
+    const MAX_STATUS = 60;
+    const TWO_MIN = 120000;
+    const PERM_DEFS = [
+      { k: 'isAdmin', l: '🛡️ מנהל מלא', d: 'גישה לפאנל ניהול מלא' },
+      { k: 'canHtml', l: '🌐 שליחת HTML', d: 'הודעות HTML מעוצבות' },
+      { k: 'canPoll', l: '📊 סקרים', d: 'יצירת סקרים' },
+      { k: 'canSendImages', l: '📷 תמונות', d: 'שליחת תמונות' },
+      { k: 'canPin', l: '📌 הצמדה', d: 'הצמדת נושאים' },
+      { k: 'canLock', l: '🔒 נעילה', d: 'נעילת נושאים' },
+      { k: 'canDelete', l: '🗑️ מחיקת הודעות', d: 'מחיקת הודעות אחרים' },
+      { k: 'canCreateThread', l: '➕ יצירת נושאים', d: 'פתיחת נושאים חדשים' },
+      { k: 'canHide', l: '🙈 הסתרת נושאים', d: 'הסתרת נושאים מכלל המשתמשים' },
+      { k: 'canManageAccess', l: '🔑 ניהול גישה', d: 'הגדרת גישה לנושאים מוסתרים' },
+    ];
+
+
+    // ═══ FIREBASE CONFIG ═══
+    // ⬇️ החלף את הערכים האלה בפרטים שקיבלת מ-Firebase Console
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3lsTeEOUdAje1NRtEZt9LB6vk_gmtZgs",
+      authDomain: "choopchik-forum.firebaseapp.com",
+      databaseURL: "https://choopchik-forum-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "choopchik-forum",
+      storageBucket: "choopchik-forum.firebasestorage.app",
+      messagingSenderId: "1044613106199",
+      appId: "1:1044613106199:web:64c78bccee34bba6666a52",
+      measurementId: "G-YCSFH3X533"
+    };
+
+    // Firestore globals
+    let db = null;
+    let pollingInterval = null;
+    let fsUnsubscribers = [];
+
+    // ── Init Firebase ──
+    async function initFirebase() {
+      // Load SDK dynamically
+      await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
+      await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js');
+      firebase.initializeApp(FIREBASE_CONFIG);
+      db = firebase.firestore();
+      db.settings({ merge: true });
+    }
+    function loadScript(src) {
+      return new Promise((res, rej) => {
+        if (document.querySelector('script[src="' + src + '"]')) { res(); return; }
+        const s = document.createElement('script');
+        s.src = src; s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
+      });
+    }
+
+    // ── Read a collection → array ──
+    async function fsGet(col) {
+      try {
+        const snap = await db.collection(col).get();
+        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      } catch (e) { console.warn('fsGet', col, e); return []; }
+    }
+
+    // ── Read a single doc → object ──
+    async function fsGetDoc(col, docId) {
+      try {
+        const d = await db.collection(col).doc(docId).get();
+        return d.exists ? d.data() : null;
+      } catch (e) { return null; }
+    }
+
+    // ── Save array as collection (batch) ──
+    async function fsSaveArr(col, arr) {
+      if (!db) return;
+      try {
+        const batch = db.batch();
+        // Delete all existing docs first then rewrite
+        // We use a map keyed by item.id
+        arr.forEach(item => {
+          const ref = db.collection(col).doc(String(item.id || Date.now()));
+          batch.set(ref, item);
+        });
+        await batch.commit();
+      } catch (e) { console.warn('fsSaveArr', col, e); }
+    }
+
+    // ── Save object doc ──
+    async function fsSaveDoc(col, docId, data) {
+      if (!db) return;
+      try { await db.collection(col).doc(docId).set(data, { merge: true }); }
+      catch (e) { console.warn('fsSaveDoc', col, docId, e); }
+    }
+
+    // ── Delete a doc ──
+    async function fsDeleteDoc(col, docId) {
+      if (!db) return;
+      try { await db.collection(col).doc(docId).delete(); }
+      catch (e) { console.warn('fsDeleteDoc', e); }
+    }
+
+    // ── Sync FROM Firestore → localStorage ──
+    async function syncFromServer() {
+      if (!db) return false;
+      try {
+        const [users, threads, msgs, reqs] = await Promise.all([
+          fsGet('users'), fsGet('threads'), fsGet('messages'), fsGet('nameRequests')
+        ]);
+        const notifDoc = await fsGetDoc('meta', 'notifications');
+        const wlDoc = await fsGetDoc('meta', 'whitelist');
+        const ltDoc = await fsGetDoc('meta', 'leftThreads');
+        const schedDoc = await fsGetDoc('meta', 'scheduledAnns');
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('threads', JSON.stringify(threads));
+        localStorage.setItem('messages', JSON.stringify(msgs));
+        localStorage.setItem('nameRequests', JSON.stringify(reqs));
+        if (notifDoc) localStorage.setItem('notifications', JSON.stringify(notifDoc.data || {}));
+        if (wlDoc) localStorage.setItem('whitelist', JSON.stringify(wlDoc.list || []));
+        if (ltDoc) localStorage.setItem('leftThreads', JSON.stringify(ltDoc.data || {}));
+        if (schedDoc) localStorage.setItem('scheduledAnns', JSON.stringify(schedDoc.list || []));
+        return true;
+      } catch (e) { console.warn('syncFromServer', e); return false; }
+    }
+
+    // ── Write item to Firestore ──
+    // Called by ss() — debounced
+    let _pendingSaves = {};
+    let _saveTimer = null;
+    async function flushToFirestore() {
+      if (!db) return;
+      const keys = Object.keys(_pendingSaves);
+      _pendingSaves = {};
+      for (const k of keys) {
+        const raw = localStorage.getItem(k);
+        if (!raw) continue;
+        const val = JSON.parse(raw);
+        if (k === 'notifications') {
+          await fsSaveDoc('meta', 'notifications', { data: val });
+        } else if (k === 'leftThreads') {
+          await fsSaveDoc('meta', 'leftThreads', { data: val });
+        } else if (k === 'scheduledAnns') {
+          await fsSaveDoc('meta', 'scheduledAnns', { list: val });
+        } else if (Array.isArray(val)) {
+          await fsSaveArr(k, val);
+        }
+      }
+    }
+
+    // ── ss() — save to localStorage AND queue Firestore write ──
+    const ss = (k, v) => {
+      localStorage.setItem(k, JSON.stringify(v));
+      _pendingSaves[k] = true;
+      clearTimeout(_saveTimer);
+      _saveTimer = setTimeout(flushToFirestore, 500);
+    };
+
+    // ── Real-time listener for messages (new message notification) ──
+    function startRealtimeListeners() {
+      if (!db || !CU) return;
+      // Listen to messages collection for changes
+      const unsub = db.collection('messages')
+        .orderBy('timestamp', 'desc')
+        .limit(1)
+        .onSnapshot(snap => {
+          if (!snap || snap.empty) return;
+          const change = snap.docChanges().find(c => c.type === 'added');
+          if (!change) return;
+          const msg = change.doc.data();
+          if (msg.userId === CU.id) return; // own message
+          // Refresh
+          syncFromServer().then(() => {
+            renderNotifs();
+            loadThreads();
+            if (CT && msg.threadId === CT.id) loadMsgs(CT.id);
+          });
+        }, err => console.warn('listener error', err));
+      fsUnsubscribers.push(unsub);
+    }
+
+    function stopListeners() {
+      fsUnsubscribers.forEach(u => u());
+      fsUnsubscribers = [];
+    }
+
+    function startPolling() {
+      if (pollingInterval) clearInterval(pollingInterval);
+      setInterval(runScheduler, 30000);
+      runScheduler();
+      startRealtimeListeners();
+      // Fallback poll every 5s in case listener misses something
+      pollingInterval = setInterval(async () => {
+        if (!CU) return;
+        const prevLen = CT ? JSON.parse(localStorage.getItem('messages') || '[]').filter(m => m.threadId === CT.id).length : -1;
+        await syncFromServer();
+        renderNotifs();
+        loadThreads();
+        if (CT) {
+          const newLen = JSON.parse(localStorage.getItem('messages') || '[]').filter(m => m.threadId === CT.id).length;
+          if (newLen !== prevLen) loadMsgs(CT.id);
+        }
+      }, 5000);
+    }
+
+    // ═══ HELPERS ═══
+    const $ = id => document.getElementById(id);
+    const ls = k => JSON.parse(localStorage.getItem(k) || '[]');
+    const lso = k => JSON.parse(localStorage.getItem(k) || '{}');
+    const isSuper = u => { u = u || CU; return u && u.email && u.email.toLowerCase() === SUPER_EMAIL.toLowerCase(); };
+    const isAdmin = u => { u = u || CU; return u && (u.isAdmin || isSuper(u)); };
+    const can = p => {
+      if (!CU) return false;
+      if (isSuper()) return true;
+      if (CU.isAdmin && p !== 'superOnly') return true;
+      return !!(CU.perms && CU.perms[p]);
+    };
+    const blockedIn = tid => {
+      if (isSuper()) return false;
+      const p = CU.perms || {};
+      return (p.blockedThreads || []).includes(tid);
+    };
+    const getUser = id => ls('users').find(u => u.id === id);
+    const getSuperUid = () => (ls('users').find(u => u.email && u.email.toLowerCase() === SUPER_EMAIL.toLowerCase()) || {}).id || '1';
+
+    // ═══ INIT ═══
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initData();
+      setupListeners();
+      const saved = localStorage.getItem('currentUser');
+      const rem = localStorage.getItem('rem');
+      const sess = sessionStorage.getItem('sa');
+      if (saved && (rem === '1' || sess)) {
+        CU = JSON.parse(saved);
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const fresh = users.find(u => u.id === CU.id && !u.deleted);
+        if (fresh) { CU = fresh; localStorage.setItem('currentUser', JSON.stringify(CU)); showApp(); startPolling(); }
+        else localStorage.removeItem('currentUser');
+      }
+    });
+
+    async function initData() {
+      // Loading spinner
+      const loader = document.createElement('div');
+      loader.style.cssText = 'position:fixed;inset:0;background:linear-gradient(135deg,#1e3a8a,#0ea5e9);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:white;font-family:Heebo,sans-serif;';
+      loader.innerHTML = '<div style="font-size:36px;margin-bottom:16px;">💬</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">מרחב הדיונים</div><div style="font-size:14px;opacity:.8;">מתחבר לשרת...</div><div style="margin-top:20px;width:40px;height:40px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;"></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+      document.body.appendChild(loader);
+      // Init Firebase first
+      try { await initFirebase(); } catch (e) { console.warn('Firebase init failed:', e); }
+      const loaded = await syncFromServer();
+      if (!loaded) { console.warn('Server unavailable, using local data'); }
+      loader.remove();
+      if (!localStorage.getItem('users')) {
+        ss('users', [{
+          id: '1', name: 'מנהל ראשי', email: SUPER_EMAIL, password: SUPER_PW,
+          isAdmin: true, avatar: 'מ', profileImage: null, status: '', deleted: false,
+          createdAt: new Date().toISOString(), perms: {}
+        }]);
+      }
+      if (!localStorage.getItem('threads')) {
+        ss('threads', [{
+          id: '1', title: 'ברוכים הבאים', description: 'נושא היכרות',
+          createdBy: '1', createdAt: new Date().toISOString(), messageCount: 1,
+          lastActivity: new Date().toISOString(), pinned: false, locked: false,
+          lastMessageId: '1', lastRead: {}
+        }]);
+      }
+      if (!localStorage.getItem('messages')) {
+        ss('messages', [{
+          id: '1', threadId: '1', userId: '1', userName: 'מנהל ראשי',
+          userAvatar: 'מ', content: 'ברוכים הבאים! 🎉', isHtml: false,
+          timestamp: new Date().toISOString(), edited: false, reactions: {}, views: ['1'], poll: null, quotedMessage: null
+        }]);
+      }
+      if (!localStorage.getItem('notifications')) ss('notifications', {});
+    }
+
+    function setupListeners() {
+      $('minput').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } });
+      $('minput').addEventListener('input', onInput);
+      $('imgUpload').addEventListener('change', handleImgSelect);
+      const vu = $('vidUpload'); if (vu) vu.addEventListener('change', handleVidSelect);
+      document.querySelectorAll('.rpe').forEach(b => b.addEventListener('click', () => {
+        const mid = $('rp').dataset.mid; if (mid) toggleReact(mid, b.dataset.e);
+        $('rp').classList.remove('open');
+      }));
+      document.addEventListener('click', e => {
+        if (e.target.classList.contains('ovl')) e.target.classList.remove('open');
+        if (!e.target.closest('#rp') && !e.target.closest('[data-react]')) $('rp').classList.remove('open');
+        if (!e.target.closest('#mdd') && !e.target.closest('#minput')) $('mdd').style.display = 'none';
+        if (!e.target.closest('#ptip') && !e.target.closest('.av') && !e.target.closest('.upill')) { $('ptip').style.display = 'none'; }
+        if (!e.target.closest('#nbell') && !e.target.closest('#np')) $('np').classList.remove('open');
+      });
+      $('msgs').addEventListener('scroll', updScrollBtn);
+    }
+
+    // ═══ AUTH ═══
+    function goSec(s) {
+      $('sec-login').classList.toggle('hidden', s !== 'login');
+      $('sec-reg').classList.toggle('hidden', s !== 'reg');
+    }
+    function doLogin() { doGoogleAuth(); }
+
+    function doReg() { doGoogleAuth(); }
+
+    function doLogout() {
+      if (pollingInterval) { clearInterval(pollingInterval); pollingInterval = null; }
+      stopListeners();
+      localStorage.removeItem('currentUser'); localStorage.removeItem('rem'); sessionStorage.removeItem('sa');
+      CU = null; CT = null; $('authScreen').style.display = 'flex'; $('appCon').style.display = 'none';
+    }
+    function showE(id, msg) { const e = $(id); e.textContent = msg; e.classList.remove('hidden'); }
+
+    // ═══ SHOW APP ═══
+    function showApp() {
+      $('authScreen').style.display = 'none'; $('appCon').style.display = 'flex';
+      sessionStorage.setItem('sa', '1');
+      $('unm').textContent = CU.name; $('ust').textContent = CU.status || 'ערוך פרופיל';
+      renderUAv();
+      // Show new thread button only if has permission
+      if (can('canCreateThread') || isAdmin()) $('ntbtn').classList.remove('hidden');
+      else $('ntbtn').classList.add('hidden');
+      if (!isAdmin()) {
+        $('contactAdminBtn').style.display = 'flex';
+      }
+      if (isSuper()) ensureAdminInbox();
+      if (isAdmin()) { const ab = $('adminBtn'); ab.style.display = 'flex'; }
+      if (can('canHtml')) $('htgl').classList.remove('hidden');
+      $('nbell').style.display = 'block';
+      renderMutedSection();
+      loadMentionUsers(); loadThreads(); renderNotifs();
+      buildToolbar();
+    }
+    function renderUAv(el) {
+      const t = el || $('uav'); if (!t) return;
+      const dot = t.querySelector('.sdot');
+      if (CU.profileImage) t.innerHTML = `<img src="${CU.profileImage}" alt="">`;
+      else t.textContent = CU.avatar || CU.name.charAt(0);
+      if (dot) t.appendChild(dot);
+    }
+
+    // ═══ PROFILE ═══
+    function showProfile() {
+      const ns = $('profNS');
+      if (isAdmin()) {
+        ns.innerHTML = `<div class="fg"><label>שם</label><input type="text" id="profNameI" value="${CU.name}"></div>`;
+      } else {
+        ns.innerHTML = `<div class="fg"><label>שם</label><div style="display:flex;align-items:center;gap:10px;">
+   <span style="font-size:15px;font-weight:600;">${CU.name}</span>
+   <button onclick="closeM('profModal');openM('nmrModal');" style="padding:4px 10px;border:1.5px solid var(--p);background:none;color:var(--p);border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;">בקשת שינוי שם</button>
+  </div></div>`;
+      }
+      $('profSt').value = CU.status || ''; openM('profModal');
+    }
+    function saveProf() {
+      const st = $('profSt').value.trim();
+      if (st.length > MAX_STATUS) { alert(`מקסימום ${MAX_STATUS} תווים`); return; }
+      if (STATUS_BAD.some(w => st.toLowerCase().includes(w.toLowerCase()))) { alert('סטטוס מכיל תוכן לא מתאים'); return; }
+      const commit = img => {
+        const ni = $('profNameI');
+        if (ni && isAdmin()) CU.name = ni.value.trim() || CU.name;
+        if (img) CU.profileImage = img;
+        CU.status = st; CU.avatar = CU.name.charAt(0).toUpperCase();
+        const users = ls('users'), i = users.findIndex(u => u.id === CU.id);
+        if (i !== -1) users[i] = { ...users[i], ...CU };
+        ss('users', users); localStorage.setItem('currentUser', JSON.stringify(CU));
+        $('unm').textContent = CU.name; $('ust').textContent = CU.status || 'ערוך פרופיל';
+        renderUAv(); if (CT) loadMsgs(CT.id); closeM('profModal');
+      };
+      const f = $('profImg').files[0];
+      if (f) { const r = new FileReader(); r.onload = e => commit(e.target.result); r.readAsDataURL(f); }
+      else commit(null);
+    }
+
+    // ═══ PROFILE TOOLTIP ═══
+    function getUserBadge(u) {
+      if (isSuper(u)) return { cls: 'rb-super', txt: 'מנהל ראשי' };
+      if (u.isAdmin) return { cls: 'rb-admin', txt: 'מנהל' };
+      const ts = ls('threads'), modded = ts.filter(t => t.mods && t.mods.includes(u.id));
+      if (modded.length === 1) return { cls: 'rb-thread', txt: 'מנהל ' + modded[0].title };
+      if (modded.length > 1) return { cls: 'rb-mod', txt: 'מנהל נושאים' };
+      if (u.perms && Object.keys(u.perms).some(k => k !== 'blockedThreads' && u.perms[k])) return { cls: 'rb-mod', txt: 'מנהל' };
+      return { cls: 'rb-user', txt: 'משתמש רגיל' };
+    }
+    function showPtip(uid, el) {
+      const u = getUser(uid); if (!u) return;
+      const tt = $('ptip'), badge = getUserBadge(u);
+      const avH = u.profileImage
+        ? `<div class="ptip-av"><img src="${u.profileImage}" alt=""></div>`
+        : `<div class="ptip-av">${u.avatar || u.name.charAt(0)}</div>`;
+      const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString('he-IL') : '';
+      tt.innerHTML = `<div class="ptip-row">${avH}<div class="ptip-info">
+  <div class="ptip-name">${u.name}</div>
+  <span class="rbadge ${badge.cls}">${badge.txt}</span>
+ </div></div>
+ ${u.status ? `<div class="ptip-status">"${u.status}"</div>` : ''}
+ ${joined ? `<div class="ptip-joined">הצטרף: ${joined}</div>` : ''}`;
+      tt.style.display = 'block';
+      // Position: beside the avatar element, at its vertical level
+      const rect = el.getBoundingClientRect();
+      const ttW = 230, ttH = tt.offsetHeight || 120;
+      let left = rect.left - ttW - 12;
+      if (left < 6) left = rect.right + 12;
+      let top = rect.top + (rect.height / 2) - (ttH / 2);
+      if (top < 6) top = 6;
+      if (top + ttH > window.innerHeight - 6) top = window.innerHeight - ttH - 6;
+      tt.style.left = left + 'px'; tt.style.right = 'auto'; tt.style.top = top + 'px';
+    }
+
+    // ═══ THREADS ═══
+    function loadThreads() {
+      threads = ls('threads');
+      threads.sort((a, b) => { if (a.pinned && !b.pinned) return -1; if (!a.pinned && b.pinned) return 1; return new Date(b.lastActivity) - new Date(a.lastActivity); });
+      renderThreads();
+    }
+    function renderThreads(filter) {
+      const c = $('tlist'); c.innerHTML = '';
+      const q = (filter || '').toLowerCase();
+      if (CU) renderMutedSection();
+      threads.forEach(t => {
+        if (!threadVisibleToUser(t)) return;
+        if (isThreadMuted(t.id)) return; // muted threads go to bottom section
+        if (q && !t.title.toLowerCase().includes(q)) return;
+        const el = document.createElement('div');
+        el.className = 'ti' + (t.pinned ? ' pinned' : '') + (t.locked ? ' locked' : '') + (CT && CT.id === t.id ? ' active' : '');
+        el.dataset.tid = t.id;
+        if (threadUnread(t)) el.classList.add('hasnew');
+        el.innerHTML = `<div class="tt">${t.pinned ? '📌 ' : ''}${t.locked ? '🔒 ' : ''}${t.title}</div>
+   <div class="tm">${fmtDate(t.lastActivity)} · ${t.messageCount || 0} הודעות</div>`;
+        el.onclick = () => selectThread(t);
+        c.appendChild(el);
+      });
+    }
+    function threadUnread(t) {
+      if (!t.lastMessageId) return false;
+      const lr = t.lastRead && t.lastRead[CU.id];
+      return !lr || lr !== t.lastMessageId;
+    }
+    function markRead(tid) {
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === tid); if (i === -1) return;
+      if (!ts[i].lastRead) ts[i].lastRead = {};
+      ts[i].lastRead[CU.id] = ts[i].lastMessageId || 'r'; ss('threads', ts);
+    }
+    function selectThread(t) {
+      CT = t;
+      document.querySelectorAll('.ti').forEach(e => e.classList.remove('active'));
+      const el = document.querySelector(`[data-tid="${t.id}"]`); if (el) el.classList.add('active');
+      $('chdr').classList.remove('hidden');
+      $('ctitle').textContent = t.title; $('cdesc').textContent = t.description || '';
+      // header actions
+      const hb = $('hbtns'); hb.innerHTML = '';
+      if (can('canPin')) hb.innerHTML += `<button class="hbtn" onclick="adPin('${t.id}')">${t.pinned ? '📌 בטל' : '📌 הצמד'}</button>`;
+      if (can('canLock')) hb.innerHTML += `<button class="hbtn" onclick="adLock('${t.id}')">${t.locked ? '🔓 פתח' : '🔒 נעל'}</button>`;
+      if (isAdmin()) hb.innerHTML += `<button class="hbtn dn" onclick="adDelThread('${t.id}')">🗑️ מחק</button>`;
+      if (isAdmin() || can('canHide')) hb.innerHTML += `<button class="hbtn" onclick="adToggleHide('${t.id}')">${t.hidden ? '👁 הצג' : '🙈 הסתר'}</button>`;
+      if (isAdmin() || can('canManageAccess')) hb.innerHTML += `<button class="hbtn" onclick="adManageAccess('${t.id}')">🔑 גישה</button>`;
+      if (!isAdmin()) {
+        const muted = isThreadMuted(t.id);
+        hb.innerHTML += `<button class="hbtn" onclick="toggleMuteThread('${t.id}')" title="${muted ? 'בטל השתקה' : 'השתק נושא'}">${muted ? '🔔 בטל השתקה' : '🔕 השתק'}</button>`;
+        hb.innerHTML += `<button class="hbtn" onclick="selfLeaveThread('${t.id}')">🚪 עזוב</button>`;
+      }
+      // input visibility
+      const blk = blockedIn(t.id);
+      if ((t.locked && !can('canLock')) || blk) {
+        $('iarea').classList.add('hidden'); $('lckbar').classList.remove('hidden');
+        $('lckbar').textContent = blk ? '🚫 אינך מורשה לכתוב בנושא זה' : '🔒 נושא נעול — רק מנהלים';
+      } else {
+        $('iarea').classList.remove('hidden'); $('lckbar').classList.add('hidden');
+        if (inputMode === 'md') buildToolbar();
+      }
+      markRead(t.id); // סמן כנקרא מיד עם כניסה
+      // הסר נקודה אדומה מיידית
+      const tidEl = document.querySelector(`[data-tid="${t.id}"]`);
+      if (tidEl) tidEl.classList.remove('hasnew');
+      loadMsgs(t.id); $('sidebar').classList.remove('open');
+    }
+    function showNewThread() {
+      if (!can('canCreateThread') && !isAdmin()) { alert('אין הרשאה'); return; }
+      $('ntTitle').value = ''; $('ntDesc').value = ''; openM('ntModal');
+    }
+    function createThread() {
+      const title = $('ntTitle').value.trim(); if (!title) return;
+      const t = {
+        id: Date.now().toString(), title, description: $('ntDesc').value.trim(),
+        createdBy: CU.id, createdAt: new Date().toISOString(), messageCount: 0,
+        lastActivity: new Date().toISOString(), pinned: false, locked: false, lastMessageId: null, lastRead: {}
+      };
+      const ts = ls('threads'); ts.unshift(t); ss('threads', ts);
+      closeM('ntModal'); loadThreads(); selectThread(t);
+    }
+
+    // ═══ MESSAGES ═══
+    function loadMsgs(tid) {
+      const all = ls('messages');
+      msgs = all.filter(m => m.threadId === tid);
+      if (msgs.length) {
+        const last = msgs[msgs.length - 1];
+        const ts = ls('threads'), i = ts.findIndex(t => t.id === tid);
+        if (i !== -1 && ts[i].lastMessageId !== last.id) { ts[i].lastMessageId = last.id; ss('threads', ts); }
+      }
+      renderMsgs();
+    }
+    function renderMsgs() {
+      const c = $('msgs'); c.innerHTML = '';
+      if (!msgs.length) {
+        c.innerHTML = '<div class="empty"><div class="ei">🗨️</div><h3>אין הודעות</h3><p>היה הראשון!</p></div>';
+        if (CT) markRead(CT.id); return;
+      }
+      msgs.forEach((msg, i) => {
+        const prev = i > 0 ? msgs[i - 1] : null;
+        const diff = prev ? new Date(msg.timestamp) - new Date(prev.timestamp) : Infinity;
+        const showH = !prev || prev.userId !== msg.userId || diff > TWO_MIN;
+        c.appendChild(buildMsg(msg, showH));
+      });
+      if (CT) markRead(CT.id);
+      setTimeout(() => { c.scrollTop = c.scrollHeight; updScrollBtn(); }, 60);
+    }
+    function buildMsg(msg, showH) {
+      const isOwn = msg.userId === CU.id;
+      const ud = getUser(msg.userId);
+      // track view
+      if (!msg.views) msg.views = [];
+      if (!msg.views.includes(CU.id)) {
+        msg.views.push(CU.id);
+        const all = ls('messages'), i = all.findIndex(m => m.id === msg.id);
+        if (i !== -1) { all[i].views = msg.views; ss('messages', all); }
+      }
+      const avH = ud && ud.profileImage ? `<img src="${ud.profileImage}" alt="">` : (ud ? ud.avatar : msg.userAvatar || '?');
+      const w = document.createElement('div');
+      w.className = 'mrow' + (isOwn ? ' own' : ' other'); w.dataset.mid = msg.id;
+      if (msg.deleted) {
+        w.innerHTML = `<div class="mavc">${showH ? `<div class="av" onclick="showPtip('${msg.userId}',this)">${avH}</div>` : '<div style="width:42px"></div>'}</div>
+   <div class="mbody">${showH ? `<div class="mhdr"><span class="mnm">${msg.userName}</span><span class="mtime">${fmtTime(msg.timestamp)}</span></div>` : ''}
+   <div class="bubble del">🗑️ הודעה נמחקה</div></div>`;
+        return w;
+      }
+      let content = '';
+      if (msg.quotedMessage) content += renderQuote(msg.quotedMessage);
+      content += fmtContent(msg.content, msg.isHtml);
+
+      const timeStr = fmtTime(msg.timestamp), views = msg.views.length;
+      // Can delete? not super's messages unless you are super
+      // Can delete: must have permission AND cannot delete super's messages unless you are super
+      const canDel = (isSuper() || (can('canDelete') && !isSuper(ud)));
+      // Floating actions (no layout shift - absolutely positioned)
+      const float = `<div class="mfloat">
+  <button class="fab" data-react="1" onclick="openRP(event,'${msg.id}')" title="תגובה">😊</button>
+  <button class="fab" onclick="startQ('${msg.id}')" title="צטט">💬</button>
+  ${!showH ? `<span style="font-size:10px;color:var(--t3);padding:2px 5px;">${timeStr} · 👁${views}</span>` : ''}
+  ${isOwn ? `<button class="fab" onclick="editMsg('${msg.id}')" title="ערוך">✏️</button>` : ''}
+  ${canDel && (isSuper() || !isSuper(ud)) ? `<button class="fab" onclick="delMsg('${msg.id}')" title="מחק">🗑️</button>` : ''}
+ </div>`;
+      w.innerHTML = `${float}
+  <div class="mavc">${showH ? `<div class="av" onclick="showPtip('${msg.userId}',this)">${avH}</div>` : '<div style="width:42px"></div>'}</div>
+  <div class="mbody">
+   ${showH ? `<div class="mhdr"><span class="mnm">${msg.userName}</span><span class="mtime">${timeStr}</span><span class="mviews">👁 ${views}</span>${msg.edited ? '<span class="medit">(נערך)</span>' : ''}</div>` : ''}
+   <div class="bubble">${content}</div>
+   ${renderReacts(msg)}
+  </div>`;
+      // image click
+      setTimeout(() => {
+        w.querySelectorAll('.mimg').forEach(img => img.addEventListener('click', () => openLB(img.src)));
+        // Show float actions only when hovering over the bubble itself
+        const bubble = w.querySelector('.bubble');
+        const float = w.querySelector('.mfloat');
+        if (bubble && float) {
+          let hideTimer = null;
+          const showF = () => { clearTimeout(hideTimer); float.classList.add('show'); };
+          const hideF = () => { hideTimer = setTimeout(() => float.classList.remove('show'), 120); };
+          bubble.addEventListener('mouseenter', showF);
+          bubble.addEventListener('mouseleave', hideF);
+          float.addEventListener('mouseenter', showF);
+          float.addEventListener('mouseleave', hideF);
+        }
+      }, 0);
+      return w;
+    }
+
+    function renderQuote(q) {
+      const clean = (q.content || '').replace(/<[^>]*>/g, '').replace(/\[סקר:[\s\S]*?\]/g, '[סקר]').substring(0, 80);
+      return `<div class="qblk"><div class="qa">${q.userName}</div><div>${clean}</div></div>`;
+    }
+    function fmtContent(c, isHtml) {
+      if (isHtml) return `<div>${c}</div>`;
+      c = c.replace(/\[סקר:[\s\S]*?\]\n?/g, '');
+      // mentions
+      c = c.replace(/@\{([^}]+)\}/g, '<span class="mchip">@$1</span>');
+      c = c.replace(/@([\u0590-\u05FFa-zA-Z0-9_]+)/g, '<span class="mchip">@$1</span>');
+      // video (base64)
+      c = c.replace(/!\[video\]\(([^)]+)\)/g, '<video src="$1" class="mvid" controls></video>');
+      // images
+      c = c.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="mimg">');
+      // detect YouTube URLs and add watch button
+      c = c.replace(/(https?:\/\/(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:watch\?[^\s]*v=|shorts\/))[\w\-?=&]{6,})/g, function (url) {
+        var vid = ''; var m = url.match(/(?:v=|youtu\.be\/|shorts\/)([\w-]{11})/); if (m) vid = m[1];
+        if (!vid) return '<a href="' + url + '" target="_blank" style="color:var(--p);text-decoration:underline;">' + url + '</a>';
+        return '<a href="' + url + '" target="_blank" style="color:var(--p);text-decoration:underline;">' + url + '</a><br><button class="yt-btn" onclick="openYT(\'' + vid + '\',\'\')">▶ צפה בסרטון</button>';
+      });
+      return c
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--p);text-decoration:underline;">$1</a>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/__(.*?)__/g, '<u>$1</u>')
+        .replace(/~~(.*?)~~/g, '<s>$1</s>')
+        .replace(/`(.*?)`/g, '<code style="background:var(--sf2);padding:2px 5px;border-radius:4px;font-family:monospace;font-size:12px;">$1</code>')
+        .replace(/^> (.+)$/gm, '<div class="qblk">$1</div>')
+        .replace(/\n/g, '<br>');
+    }
+    function renderReacts(msg) {
+      if (!msg.reactions || !Object.keys(msg.reactions).length) return '';
+      const isOwn = msg.userId === CU.id;
+      let h = `<div class="reacts" style="justify-content:${isOwn ? 'flex-end' : 'flex-start'}">`;
+      for (const [emoji, uids] of Object.entries(msg.reactions)) {
+        if (!uids.length) continue;
+        const mine = uids.includes(CU.id);
+        h += `<div class="rchip${mine ? ' mine' : ''}" onclick="toggleReact('${msg.id}','${emoji}')" title="${uids.length} אנשים הגיבו">${emoji}<span class="rc-count">${uids.length}</span></div>`;
+      }
+      return h + '</div>';
+    }
+
+    // ═══ SEND ═══
+    function sendMsg() {
+      const inp = $('minput'), raw = inp.value.trim();
+      if ((!raw && !pendingImg && !pendingVideo) || !CT) return;
+      if (CT.locked && !can('canLock')) return;
+      if (blockedIn(CT.id)) { alert('אינך מורשה לכתוב בנושא זה'); return; }
+      if (OFFENSIVE.some(w => raw.toLowerCase().includes(w.toLowerCase()))) { alert('תוכן לא מתאים'); return; }
+      const poll = null; // poll removed
+      const isHtml = inputMode === 'html' && can('canHtml');
+      let finalContent = raw;
+      if (pendingImg) {
+        finalContent = raw ? raw + '\n' + `![תמונה](${pendingImg})` : `![תמונה](${pendingImg})`;
+      }
+      if (pendingVideo) {
+        finalContent = (finalContent || '') + (finalContent ? '\n' : '') + `![video](${pendingVideo})`;
+      }
+      if (!finalContent.trim()) return;
+      const msg = {
+        id: Date.now().toString(), threadId: CT.id, userId: CU.id,
+        userName: CU.name, userAvatar: CU.avatar, content: finalContent, isHtml,
+        timestamp: new Date().toISOString(), edited: false, reactions: {},
+        quotedMessage: quotedMsg ? { ...quotedMsg } : null,
+        poll: null, views: [CU.id]
+      };
+      const all = ls('messages'); all.push(msg); ss('messages', all);
+      const ts = ls('threads'), ti = ts.findIndex(t => t.id === CT.id);
+      if (ti !== -1) { ts[ti].messageCount = (ts[ti].messageCount || 0) + 1; ts[ti].lastActivity = msg.timestamp; ts[ti].lastMessageId = msg.id; if (!ts[ti].lastRead) ts[ti].lastRead = {}; ts[ti].lastRead[CU.id] = msg.id; ss('threads', ts); }
+      processMentions(raw, msg);
+      inp.value = ''; inp.style.height = '44px'; $('sbtn').disabled = true;
+      clearQ(); clearImgPrev(); pendingVideo = null;
+      loadMsgs(CT.id); loadThreads();
+    }
+
+    // ═══ MENTIONS ═══
+    function processMentions(text, msg) {
+      const users = ls('users').filter(u => !u.deleted);
+      const mentioned = new Set();
+      const r1 = /@\{([^}]+)\}/g; let m;
+      while ((m = r1.exec(text)) !== null) { const u = users.find(x => x.name === m[1]); if (u && u.id !== CU.id) mentioned.add(u.id); }
+      const plain = text.replace(/@\{[^}]+\}/g, '');
+      const r2 = /@([\u0590-\u05FFa-zA-Z0-9_]+)/g;
+      while ((m = r2.exec(plain)) !== null) {
+        const nm = m[1];
+        if (nm === 'כולם' && isAdmin()) { users.forEach(u => { if (u.id !== CU.id) mentioned.add(u.id); }); continue; }
+        const u = users.find(x => x.name === nm || x.name.split(' ')[0] === nm);
+        if (u && u.id !== CU.id) mentioned.add(u.id);
+      }
+      mentioned.forEach(uid => {
+        addNotif(uid, { type: 'mention', from: CU.name, threadId: msg.threadId, threadTitle: CT ? CT.title : '', msgId: msg.id });
+      });
+    }
+    function loadMentionUsers() { mentionUsers = ls('users').filter(u => !u.deleted); }
+    function onInput() {
+      const inp = $('minput');
+      $('sbtn').disabled = (!inp.value.trim() && !pendingImg && !pendingVideo);
+      inp.style.height = '44px'; inp.style.height = Math.min(inp.scrollHeight, 120) + 'px';
+      handleMention(inp);
+    }
+    function handleMention(inp) {
+      const before = inp.value.substring(0, inp.selectionStart);
+      const m = before.match(/@([\u0590-\u05FFa-zA-Z0-9_]*)$/);
+      const dd = $('mdd');
+      if (!m) { dd.style.display = 'none'; return; }
+      lastMentionIdx = m.index;
+      const q = m[1].toLowerCase();
+      let matches = mentionUsers.filter(u => u.name.toLowerCase().includes(q));
+      if (isAdmin() && 'כולם'.includes(q)) matches = [{ id: 'all', name: 'כולם', avatar: '📢' }, ...matches];
+      if (!matches.length) { dd.style.display = 'none'; return; }
+      dd.innerHTML = '';
+      matches.slice(0, 7).forEach(u => {
+        const it = document.createElement('div'); it.className = 'mdi';
+        const av = u.profileImage ? `<img src="${u.profileImage}" alt="">` : (u.avatar || u.name.charAt(0));
+        it.innerHTML = `<div class="miav">${av}</div><span>${u.name}</span>`;
+        it.onclick = () => selMention(u.name, inp);
+        dd.appendChild(it);
+      });
+      const rect = inp.getBoundingClientRect();
+      dd.style.display = 'block';
+      dd.style.bottom = (window.innerHeight - rect.top + 4) + 'px';
+      dd.style.right = Math.max(4, rect.right - 200) + 'px';
+      dd.style.left = 'auto';
+    }
+    function selMention(name, inp) {
+      const hasSpace = name.includes(' ');
+      const tag = hasSpace ? `@{${name}} ` : `@${name} `;
+      const before = inp.value.substring(0, lastMentionIdx);
+      const after = inp.value.substring(inp.selectionStart);
+      inp.value = before + tag + after;
+      const pos = before.length + tag.length;
+      inp.setSelectionRange(pos, pos);
+      $('mdd').style.display = 'none'; inp.focus(); onInput();
+    }
+
+    // ═══ QUOTE ═══
+    function startQ(mid) {
+      const msg = msgs.find(m => m.id === mid); if (!msg) return;
+      quotedMsg = { id: msg.id, userName: msg.userName, content: msg.content };
+      $('qfrom').textContent = msg.userName;
+      $('qtxt').textContent = msg.content.replace(/<[^>]*>/g, '').substring(0, 50);
+      $('qbar').classList.remove('hidden'); $('minput').focus();
+    }
+    function clearQ() { quotedMsg = null; $('qbar').classList.add('hidden'); }
+
+    // ═══ IMAGE UPLOAD ═══
+    function handleImgSelect(e) {
+      const f = e.target.files[0]; if (!f) return;
+      if (!f.type.startsWith('image/')) { alert('רק קבצי תמונה'); return; }
+      const r = new FileReader();
+      r.onload = ev => {
+        pendingImg = ev.target.result; // store separately, NOT in textarea
+        const bar = $('iprev'); bar.classList.remove('hidden');
+        bar.innerHTML = `
+   <img src="${ev.target.result}" alt="" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;">
+   <span class="iprevn">📷 ${f.name}</span>
+   <button class="iprevrm" onclick="clearImgPrev()">×</button>`;
+        // Enable send button even if textarea is empty
+        $('sbtn').disabled = false;
+      };
+      r.readAsDataURL(f); e.target.value = '';
+    }
+    function clearImgPrev() { pendingImg = null; const b = $('iprev'); b.classList.add('hidden'); b.innerHTML = ''; }
+
+    // ═══ FORMAT ═══
+    function setMode(mode) {
+      if (mode === 'html' && !can('canHtml')) return;
+      inputMode = mode;
+      $('btnMd').classList.toggle('act', mode === 'md');
+      $('btnHtml').classList.toggle('act', mode === 'html');
+      if (mode === 'html') { $('tbar').innerHTML = `<span style="font-size:12px;color:var(--t2);">✏️ HTML — תגיות: &lt;b&gt; &lt;i&gt; &lt;span style&gt; &lt;br&gt; &lt;img&gt; &lt;a&gt;</span>`; }
+      else buildToolbar();
+    }
+    function buildToolbar() {
+      const tb = $('tbar');
+      const showPoll = false;
+      const showImg = true; // כל משתמש יכול לשלוח תמונות
+      tb.innerHTML = `
+  <button class="tbtn" data-f="bold"><strong>B</strong></button>
+  <button class="tbtn" data-f="italic"><em>I</em></button>
+  <button class="tbtn" data-f="underline"><u>U</u></button>
+  <button class="tbtn" data-f="strike"><s>S</s></button>
+  <button class="tbtn" data-f="quote">❝</button>
+  <button class="tbtn" data-f="code">&lt;/&gt;</button>
+  <button class="tbtn" data-f="link">🔗</button>
+  <button class="tbtn" data-f="emoji">😊</button>
+  ${showImg ? `<button class="tbtn" onclick="$('imgUpload').click()">📷</button><button class="tbtn" onclick="$('vidUpload').click()">🎬</button>` : ''}`;
+      tb.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => doFmt(b.dataset.f)));
+    }
+    function doFmt(f) {
+      const inp = $('minput');
+      if (f === 'poll') { return; } // poll removed
+      if (f === 'emoji') { const ems = ['😊', '😂', '😍', '🤔', '👍', '🔥', '🎉', '💯', '❤️', '😎']; const p = prompt('בחר: ' + ems.join(' ')); if (p && ems.includes(p)) insAt(inp, p); return; }
+      if (f === 'link') { const url = prompt('קישור:'); if (!url) return; const txt = prompt('טקסט:') || url; insAt(inp, `[${txt}](${url})`); return; }
+      const s = inp.selectionStart, e = inp.selectionEnd, sel = inp.value.substring(s, e);
+      const map = { bold: `**${sel || 'טקסט'}**`, italic: `*${sel || 'טקסט'}*`, underline: `__${sel || 'טקסט'}__`, strike: `~~${sel || 'טקסט'}~~`, quote: `> ${sel || 'ציטוט'}`, code: `\`${sel || 'קוד'}\`` };
+      const t = map[f]; if (!t) return;
+      inp.value = inp.value.substring(0, s) + t + inp.value.substring(e);
+      inp.setSelectionRange(s + t.length, s + t.length); inp.focus(); onInput();
+    }
+    function insAt(inp, txt) { const s = inp.selectionStart; inp.value = inp.value.substring(0, s) + txt + inp.value.substring(s); inp.setSelectionRange(s + txt.length, s + txt.length); inp.focus(); onInput(); }
+
+    // ═══ REACTIONS ═══
+    function openRP(e, mid) {
+      e.stopPropagation();
+      const rp = $('rp'); rp.dataset.mid = mid; rp.classList.add('open');
+      // Measure picker size (192px wide, ~80px tall)
+      const pw = 200, ph = 90;
+      let x = e.clientX, y = e.clientY - ph - 10;
+      if (x + pw > window.innerWidth - 10) x = window.innerWidth - pw - 10;
+      if (x < 4) x = 4;
+      if (y < 4) y = e.clientY + 20;
+      rp.style.left = x + 'px'; rp.style.top = y + 'px'; rp.style.right = 'auto';
+    }
+    function toggleReact(mid, emoji) {
+      const all = ls('messages'), i = all.findIndex(m => m.id === mid); if (i === -1) return;
+      const msg = all[i]; if (!msg.reactions) msg.reactions = {};
+      if (!msg.reactions[emoji]) msg.reactions[emoji] = [];
+      const ui = msg.reactions[emoji].indexOf(CU.id);
+      if (ui === -1) { const tot = Object.values(msg.reactions).reduce((n, u) => n + (u.includes(CU.id) ? 1 : 0), 0); if (tot < 2) msg.reactions[emoji].push(CU.id); }
+      else { msg.reactions[emoji].splice(ui, 1); if (!msg.reactions[emoji].length) delete msg.reactions[emoji]; }
+      all[i] = msg; ss('messages', all); if (CT) loadMsgs(CT.id);
+    }
+
+    // ═══ EDIT / DELETE ═══
+    function editMsg(mid) {
+      const msg = msgs.find(m => m.id === mid); if (!msg) return;
+      const nt = prompt('ערוך:', msg.content); if (nt === null || nt.trim() === msg.content) return;
+      const all = ls('messages'), i = all.findIndex(m => m.id === mid);
+      if (i !== -1) { all[i].content = nt.trim(); all[i].edited = true; ss('messages', all); loadMsgs(CT.id); }
+    }
+    function delMsg(mid) {
+      const allM = ls('messages'), msg = allM.find(m => m.id === mid);
+      if (msg && !isSuper() && isSuper(getUser(msg.userId))) { alert('לא ניתן למחוק הודעות של המנהל הראשי'); return; }
+      if (!confirm('למחוק?')) return;
+      const i = allM.findIndex(m => m.id === mid);
+      if (i !== -1) { allM[i].deleted = true; ss('messages', allM); loadMsgs(CT.id); }
+    }
+
+    // ═══ POLL ═══
+    function addPO() { const w = $('pollOW'), n = w.querySelectorAll('.popt').length + 1; if (n > 6) return; const d = document.createElement('div'); d.className = 'fg'; d.innerHTML = `<label>אפשרות ${n}</label><input type="text" class="popt">`; w.appendChild(d); }
+    function confirmPoll() {
+      const q = $('pollQ').value.trim(); if (!q) { alert('הכנס שאלה'); return; }
+      const opts = Array.from(document.querySelectorAll('#pollOW .popt')).map(i => i.value.trim()).filter(v => v);
+      if (opts.length < 2) { alert('2 אפשרויות לפחות'); return; }
+      const poll = { id: Date.now().toString(), question: q, options: opts.map((t, i) => ({ id: i, text: t, votes: [] })), maxChoices: parseInt($('pollMax').value), voters: [], createdBy: CU.id };
+      closeM('pollModal');
+      const inp = $('minput'); inp.value += (inp.value ? '\n' : '') + `[סקר:${JSON.stringify(poll)}]`; onInput();
+    }
+    function renderPoll(poll, msgId) {
+      const voted = poll.voters.includes(CU.id);
+      const total = poll.options.reduce((s, o) => s + o.votes.length, 0);
+      let h = `<div class="pcard"><div class="pq">📊 ${poll.question}</div>`;
+      if (!voted) {
+        const radio = poll.maxChoices === 1;
+        h += `<div id="pv-${poll.id}">`;
+        poll.options.forEach(o => {
+          h += `<button type="button" class="pob" onclick="pickO(this,'${poll.id}',${o.id},${radio})"><div class="pi"></div><span>${o.text}</span></button>`;
+        });
+        h += `<button class="pvbtn" onclick="castV(event,'${msgId}','${poll.id}')">הצבע</button></div>`;
+      } else {
+        poll.options.forEach(o => {
+          const pct = total > 0 ? Math.round(o.votes.length / total * 100) : 0;
+          const mine = o.votes.includes(CU.id);
+          h += `<div><div class="prl"><span>${mine ? '✓ ' : ''}${o.text}</span><span>${pct}%</span></div><div class="prbg"><div class="prfill" style="width:${pct}%"></div></div></div>`;
+        });
+        h += `<div style="font-size:11px;color:var(--t3);margin-top:5px;">סה"כ ${total} קולות</div>`;
+      }
+      return h + '</div>';
+    }
+    function pickO(el, pid, oid, radio) {
+      const c = document.getElementById(`pv-${pid}`);
+      if (radio) { c.querySelectorAll('.pob').forEach(b => { b.classList.remove('sel'); const pi = b.querySelector('.pi'); pi.style.background = ''; pi.style.borderColor = ''; }); }
+      el.classList.toggle('sel');
+    }
+    function castV(e, msgId, pid) {
+      e.stopPropagation();
+      const sel = Array.from(document.querySelectorAll(`#pv-${pid} .pob.sel`)).map(b => parseInt(b.getAttribute('onclick').match(/,(\d+),/)[1]));
+      if (!sel.length) { alert('בחר אפשרות'); return; }
+      const all = ls('messages'), i = all.findIndex(m => m.id === msgId);
+      if (i !== -1 && all[i].poll && !all[i].poll.voters.includes(CU.id)) {
+        all[i].poll.voters.push(CU.id);
+        sel.forEach(id => { if (all[i].poll.options[id]) all[i].poll.options[id].votes.push(CU.id); });
+        ss('messages', all); loadMsgs(CT.id);
+      }
+    }
+
+    // ═══ NOTIFICATIONS ═══
+    function addNotif(uid, notif) {
+      const n = lso('notifications');
+      if (!n[uid]) n[uid] = [];
+      n[uid].unshift({ ...notif, id: Date.now().toString() + uid, read: false, timestamp: new Date().toISOString() });
+      if (n[uid].length > 50) n[uid] = n[uid].slice(0, 50);
+      ss('notifications', n);
+      if (CU && CU.id === uid) renderNotifs();
+    }
+    function notifySuper(type, text) {
+      if (isSuper()) return;
+      addNotif(getSuperUid(), { type, from: CU.name, text });
+    }
+    function renderNotifs() {
+      const n = lso('notifications');
+      const myN = (n[CU ? CU.id : ''] || []).slice(0, 30);
+      const unread = myN.filter(x => !x.read).length;
+      const badge = $('nbb');
+      if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.classList.remove('hidden'); }
+      else badge.classList.add('hidden');
+      const list = $('nl'); list.innerHTML = '';
+      if (!myN.length) { list.innerHTML = '<div class="nonot">אין התראות</div>'; return; }
+      myN.forEach(notif => {
+        const d = document.createElement('div'); d.className = 'ni' + (notif.read ? '' : ' unrd');
+        let ico = '🔔', title = '', sub = '';
+        if (notif.type === 'mention') {
+          ico = '🏷️'; title = `<b>${notif.from}</b> תייג אותך`; sub = `ב"${notif.threadTitle || ''}"`;
+        } else if (notif.type === 'dm') {
+          ico = '✉️'; title = `<b>${notif.from}</b> שלח הודעה`; sub = (notif.text || '').substring(0, 40);
+        } else if (notif.type === 'pin') {
+          ico = '📌'; title = `${notif.from} הצמיד "${notif.text || ''}"`;
+        } else if (notif.type === 'lock') {
+          ico = '🔒'; title = `${notif.from} נעל "${notif.text || ''}"`;
+        } else if (notif.type === 'block') { ico = '🛡️'; title = `${notif.from}: ${notif.text || ''}`; }
+        d.innerHTML = `<div class="nico">${ico}</div><div class="nitx"><b>${title}</b>${sub ? `<div>${sub}</div>` : ''}<div class="nitime">${fmtDate(notif.timestamp)}</div></div>`;
+        if (notif.threadId) {
+          d.onclick = () => {
+            const t = threads.find(x => x.id === notif.threadId);
+            if (t) { selectThread(t); if (notif.msgId) setTimeout(() => { const el = document.querySelector(`[data-mid="${notif.msgId}"]`); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.style.background = '#fef9c3'; setTimeout(() => el.style.background = '', 1500); } }, 350); }
+            notif.read = true; n[CU.id] = myN; ss('notifications', n); renderNotifs();
+            $('np').classList.remove('open');
+          };
+        }
+        list.appendChild(d);
+      });
+    }
+    function toggleNP() {
+      const p = $('np'); const opening = !p.classList.contains('open');
+      p.classList.toggle('open');
+      if (opening) { const n = lso('notifications'); (n[CU.id] || []).forEach(x => x.read = true); ss('notifications', n); renderNotifs(); }
+    }
+    function clearNotifs() { const n = lso('notifications'); n[CU.id] = []; ss('notifications', n); renderNotifs(); }
+
+    // ═══ ADMIN ═══
+    const ATABS = ['threads', 'users', 'perms', 'requests', 'msgs', 'whitelist', 'settings'];
+    const ALABELS = ['נושאים', 'משתמשים', 'הרשאות', 'בקשות שם', 'הודעות', '🔐 גישה', 'הגדרות'];
+    function openAdmin() {
+      if (!isAdmin()) { alert('אין הרשאה'); return; }
+      const tc = $('atabs'); tc.innerHTML = '';
+      ATABS.forEach((t, i) => { const b = document.createElement('button'); b.className = 'atab'; b.textContent = ALABELS[i]; b.onclick = () => showATab(t); tc.appendChild(b); });
+      openM('adminModal'); showATab('threads');
+    }
+    function showATab(name) {
+      $('atabs').querySelectorAll('.atab').forEach((t, i) => t.classList.toggle('act', ATABS[i] === name));
+      ATABS.forEach(t => { const c = $(`atab-${t}`); if (c) c.classList.toggle('act', t === name); });
+      if (name === 'threads') renderAThreads();
+      if (name === 'users') renderAUsers();
+      if (name === 'perms') renderPermList();
+      if (name === 'requests') renderARequests();
+      if (name === 'msgs') renderAMsgs();
+      if (name === 'whitelist') renderWhitelist();
+      if (name === 'settings') renderAStats();
+    }
+    function renderAThreads() {
+      const ts = ls('threads'), c = $('atList'); c.innerHTML = '';
+      ts.forEach(t => {
+        const d = document.createElement('div'); d.className = 'arow';
+        d.innerHTML = `<div class="ari"><strong>${t.title}${t.hidden ? ' 🙈' : ''}</strong><small>${t.description || ''} · ${t.messageCount || 0} הודעות ${t.hidden ? '· מוסתר' : ''}</small></div>
+   <div class="abtns">
+    <button class="mbtn g" onclick="adPin('${t.id}')">${t.pinned ? '📌 בטל' : '📌'}</button>
+    <button class="mbtn g" onclick="adLock('${t.id}')">${t.locked ? '🔓' : '🔒'}</button>
+    <button class="mbtn g" onclick="adRenameThread('${t.id}')">✏️ שנה שם</button>
+    <button class="mbtn g" onclick="adToggleHide('${t.id}')">${t.hidden ? '👁 הצג' : '🙈 הסתר'}</button>
+    <button class="mbtn g" onclick="adManageAccess('${t.id}')">🔑 גישה</button>
+    <button class="mbtn d" onclick="adDelThread('${t.id}')">מחק</button>
+   </div>`;
+        c.appendChild(d);
+      });
+    }
+    function renderAUsers() {
+      const q = ($('ausSearch')?.value || '').toLowerCase();
+      let users = ls('users');
+      if (q) users = users.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+      const c = $('auList'); c.innerHTML = '';
+      users.forEach(u => {
+        const d = document.createElement('div'); d.className = 'arow';
+        d.innerHTML = `<div class="ari">
+   <strong>${u.name}${isSuper(u) ? ' 👑' : u.isAdmin ? ' 🛡️' : ''}</strong>
+   <small>${u.email} ${u.deleted ? '<span style="color:var(--dn)">חסום</span>' : ''}</small>
+  </div>
+  <div class="abtns">
+   <button class="mbtn g" onclick="adRename('${u.id}')">✏️ שם</button>
+   ${!isSuper(u) ? `<button class="mbtn ${u.isAdmin ? 'd' : 'g'}" onclick="adToggleAdmin('${u.id}')">${u.isAdmin ? 'הסר מנהל' : 'הפוך למנהל'}</button>` : ''}
+   ${!isSuper(u) ? `<button class="mbtn ${u.deleted ? 's' : 'd'}" onclick="adToggleBlock('${u.id}')">${u.deleted ? 'בטל חסימה' : 'חסום'}</button>` : ''}
+  </div>`;
+        c.appendChild(d);
+      });
+    }
+    function renderPermList() {
+      const q = ($('apsSearch')?.value || '').toLowerCase();
+      let users = ls('users').filter(u => !u.deleted);
+      if (q) users = users.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+      const c = $('apList'); c.innerHTML = '';
+      users.forEach(u => {
+        const d = document.createElement('div'); d.className = 'arow';
+        const p = u.perms || {};
+        const pills = PERM_DEFS.filter(pd => u.isAdmin || p[pd.k]).map(pd => `<span class="bpill">${pd.l.split(' ')[0]}</span>`).join(' ');
+        d.innerHTML = `<div class="ari"><strong>${u.name}${u.isAdmin ? ' 🛡️' : ''}</strong><small>${u.email}</small>
+   <div style="margin-top:4px;display:flex;gap:3px;flex-wrap:wrap;">${pills || '<span style="font-size:11px;color:var(--t3)">ללא הרשאות מיוחדות</span>'}</div></div>
+  <div class="abtns"><button class="mbtn p" onclick="openPermE('${u.id}')">✏️ ערוך</button></div>`;
+        c.appendChild(d);
+      });
+    }
+    function openPermE(uid) {
+      editingPermUid = uid;
+      const u = getUser(uid); if (!u) return;
+      const p = u.perms || {}, ts = ls('threads');
+      $('apTitle').textContent = `הרשאות: ${u.name}`;
+      const ch = $('apChecks'); ch.innerHTML = '';
+      PERM_DEFS.forEach(pd => {
+        const checked = u.isAdmin || !!p[pd.k];
+        const disabled = (pd.k === 'isAdmin' && isSuper(u)) || (u.id === CU.id && pd.k === 'isAdmin') ? 'disabled' : '';
+        const lbl = document.createElement('label'); lbl.className = 'plbl';
+        lbl.innerHTML = `<input type="checkbox" data-p="${pd.k}" ${checked ? 'checked' : ''} ${disabled} style="accent-color:var(--p);">
+   <div><div style="font-weight:600;font-size:13px;">${pd.l}</div><div style="font-size:12px;color:var(--t2);">${pd.d}</div></div>`;
+        ch.appendChild(lbl);
+      });
+      const bl = $('apBlocks'); bl.innerHTML = '';
+      const blocked = p.blockedThreads || [];
+      ts.forEach(t => {
+        const isBlk = blocked.includes(t.id);
+        const lbl = document.createElement('label'); lbl.className = 'plbl blk';
+        lbl.innerHTML = `<input type="checkbox" class="blk-inp" data-bt="${t.id}" ${isBlk ? 'checked' : ''} style="accent-color:var(--dn);">
+   <div style="font-size:13px;">🚫 חסום מ: <strong>${t.title}</strong></div>`;
+        bl.appendChild(lbl);
+      });
+      $('apEditor').classList.remove('hidden');
+      setTimeout(() => $('apEditor').scrollIntoView({ behavior: 'smooth' }), 50);
+    }
+    function savePerms() {
+      if (!editingPermUid) return;
+      const users = ls('users'), i = users.findIndex(u => u.id === editingPermUid); if (i === -1) return;
+      const np = {};
+      document.querySelectorAll('#apChecks input[data-p]').forEach(cb => { np[cb.dataset.p] = cb.checked; });
+      const bt = [];
+      document.querySelectorAll('#apBlocks input[data-bt]').forEach(cb => { if (cb.checked) bt.push(cb.dataset.bt); });
+      np.blockedThreads = bt;
+      users[i].isAdmin = !!np.isAdmin; delete np.isAdmin; users[i].perms = np; ss('users', users);
+      if (CU.id === editingPermUid) { CU.isAdmin = users[i].isAdmin; CU.perms = np; localStorage.setItem('currentUser', JSON.stringify(CU)); }
+      const btn = document.querySelector('#apEditor .mbtn.p'); btn.textContent = '✓ נשמר!';
+      setTimeout(() => { btn.textContent = 'שמור הרשאות'; }, 1600);
+      renderPermList(); renderAUsers();
+    }
+    function renderARequests() {
+      const allReqs = ls('nameRequests');
+      const nameReqs = allReqs.filter(r => r.status === 'pending' && r.type !== 'joinThread');
+      const joinReqs = allReqs.filter(r => r.status === 'pending' && r.type === 'joinThread');
+      const leftReqs = allReqs.filter(r => r.status === 'left'); // auto-generated on leave
+      const c = $('arList');
+      c.innerHTML = '';
+      let hasAny = false;
+
+      // Name change requests
+      if (nameReqs.length) {
+        hasAny = true;
+        c.innerHTML += '<div class="asec"><h4>בקשות שינוי שם</h4></div>';
+        nameReqs.forEach(r => {
+          const d = document.createElement('div'); d.className = 'arow';
+          d.innerHTML = `<div class="ari"><strong>${r.userName} → ${r.newName}</strong><small>${r.reason}</small></div>
+    <div class="abtns">
+     <button class="mbtn s" onclick="appNR('${r.id}')">אשר</button>
+     <button class="mbtn d" onclick="rejNR('${r.id}')">דחה</button>
+    </div>`;
+          c.appendChild(d);
+        });
+      }
+
+      // Join thread requests (manual requests)
+      if (joinReqs.length) {
+        hasAny = true;
+        const h = document.createElement('div'); h.className = 'asec';
+        h.innerHTML = '<h4>בקשות הצטרפות לנושא</h4>'; c.appendChild(h);
+        joinReqs.forEach(r => {
+          const t = ls('threads').find(x => x.id === r.threadId);
+          const d = document.createElement('div'); d.className = 'arow';
+          d.innerHTML = `<div class="ari">
+    <strong>${r.userName}</strong>
+    <small>נושא: ${t ? t.title : r.threadId} · ${r.reason}</small>
+   </div>
+   <div class="abtns">
+    <button class="mbtn s" onclick="approveJoin('${r.id}')">אשר הצטרפות</button>
+    <button class="mbtn d" onclick="rejNR('${r.id}')">דחה</button>
+   </div>`;
+          c.appendChild(d);
+        });
+      }
+
+      // Users who self-left (show for admin to restore)
+      const leftSection = document.createElement('div');
+      leftSection.className = 'asec';
+      leftSection.innerHTML = '<h4>משתמשים שעזבו נושאים</h4>';
+      c.appendChild(leftSection);
+      const left = JSON.parse(localStorage.getItem('leftThreads') || '{}');
+      let hasLeft = false;
+      ls('users').filter(u => !u.deleted).forEach(u => {
+        const userLeft = (left[u.id] || []);
+        userLeft.forEach(tid => {
+          const t = ls('threads').find(x => x.id === tid); if (!t) return;
+          hasLeft = true; hasAny = true;
+          const d = document.createElement('div'); d.className = 'arow';
+          d.innerHTML = `<div class="ari">
+    <strong>${u.name}</strong>
+    <small>עזב את: ${t.title}</small>
+   </div>
+   <div class="abtns">
+    <button class="mbtn s" onclick="restoreUserToThread('${u.id}','${tid}')">החזר לנושא</button>
+   </div>`;
+          c.appendChild(d);
+        });
+      });
+      if (!hasLeft) {
+        const e = document.createElement('p');
+        e.style.cssText = 'font-size:13px;color:var(--t3);padding:6px 0;';
+        e.textContent = 'אין משתמשים שעזבו נושאים';
+        leftSection.appendChild(e);
+      }
+
+      if (!hasAny && !hasLeft) {
+        c.innerHTML = '<p style="text-align:center;color:var(--t2);padding:20px;font-size:13px;">אין בקשות ✓</p>';
+      }
+    }
+
+    function approveJoin(rid) {
+      const reqs = ls('nameRequests'), r = reqs.find(x => x.id === rid); if (!r) return;
+      r.status = 'approved'; ss('nameRequests', reqs);
+      restoreUserToThread(r.userId, r.threadId);
+      renderARequests();
+    }
+
+    function restoreUserToThread(uid, tid) {
+      // Remove from leftThreads
+      const left = JSON.parse(localStorage.getItem('leftThreads') || '{}');
+      if (left[uid]) left[uid] = left[uid].filter(x => x !== tid);
+      localStorage.setItem('leftThreads', JSON.stringify(left));
+      // Notify user
+      const t = ls('threads').find(x => x.id === tid);
+      addNotif(uid, {
+        type: 'dm', from: 'מנהל',
+        text: `הוחזרת לנושא "${t ? t.title : ''}" 🎉`, threadId: tid
+      });
+      renderARequests();
+      loadThreads();
+    }
+    function renderAMsgs() {
+      const sel = $('dmSel'); sel.innerHTML = '<option value="">-- בחר --</option>';
+      ls('users').filter(u => !u.deleted && u.id !== CU.id).forEach(u => { const o = document.createElement('option'); o.value = u.id; o.textContent = u.name; sel.appendChild(o); });
+      const asel = $('anThreads'); asel.innerHTML = '';
+      ls('threads').forEach(t => { const o = document.createElement('option'); o.value = t.id; o.textContent = t.title; asel.appendChild(o); });
+      renderSchedList();
+      onSchedTypeChange();
+      // Set min datetime to now
+      const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      const nowStr = now.toISOString().slice(0, 16);
+      const dtEl = $('schedDateTime'); if (dtEl) dtEl.min = nowStr;
+      const stEl = $('schedStartTime'); if (stEl) stEl.min = nowStr;
+    }
+    function sendDM() {
+      const uid = $('dmSel').value, text = $('dmTxt').value.trim();
+      if (!uid || !text) { alert('בחר משתמש וכתוב הודעה'); return; }
+      addNotif(uid, { type: 'dm', from: CU.name, text: text.substring(0, 100), threadId: null });
+      $('dmTxt').value = ''; alert('ההודעה נשלחה!');
+    }
+    function sendAnn() {
+      const title = $('anTitle').value.trim(), body = $('anBody').value.trim();
+      const tids = Array.from($('anThreads').selectedOptions).map(o => o.value);
+      if (!title || !body || !tids.length) { alert('מלא כותרת, תוכן ובחר לפחות נושא'); return; }
+      const type = $('schedType').value;
+      if (type === 'now') {
+        doSendAnn(title, body, tids);
+        $('anTitle').value = ''; $('anBody').value = '';
+        renderSchedList();
+      } else if (type === 'once') {
+        const dt = $('schedDateTime').value;
+        if (!dt) { alert('בחר תאריך ושעה'); return; }
+        const sendAt = new Date(dt).getTime();
+        if (sendAt <= Date.now()) { alert('הזמן חייב להיות בעתיד'); return; }
+        saveScheduled({
+          id: Date.now().toString(), type: 'once', title, body, tids,
+          sendAt, createdBy: CU.name, createdAt: Date.now()
+        });
+        alert('הכרזה תישלח ב-' + new Date(sendAt).toLocaleString('he-IL'));
+        $('anTitle').value = ''; $('anBody').value = '';
+        renderSchedList();
+      } else if (type === 'repeat') {
+        const interval = parseInt($('schedInterval').value) || 1;
+        const unit = parseInt($('schedUnit').value);
+        const intervalMs = interval * unit * 1000;
+        const startVal = $('schedStartTime').value;
+        const startAt = startVal ? new Date(startVal).getTime() : Date.now();
+        saveScheduled({
+          id: Date.now().toString(), type: 'repeat', title, body, tids,
+          intervalMs, nextSendAt: startAt, createdBy: CU.name, createdAt: Date.now(),
+          intervalLabel: interval + ' ' + ({ 60: 'דקות', 3600: 'שעות', 86400: 'ימים' }[unit] || '')
+        });
+        alert('הכרזה חוזרת נשמרה!');
+        $('anTitle').value = ''; $('anBody').value = '';
+        renderSchedList();
+      }
+    }
+
+    function doSendAnn(title, body, tids) {
+      tids.forEach(tid => {
+        const msg = {
+          id: (Date.now() + Math.random()).toString(), threadId: tid, userId: CU ? CU.id : 'system',
+          userName: CU ? CU.name : 'מערכת', userAvatar: CU ? CU.avatar : 'מ',
+          content: '📢 **' + title + '**\n\n' + body, isHtml: false,
+          timestamp: new Date().toISOString(), edited: false, reactions: {}, views: [], poll: null, quotedMessage: null
+        };
+        const all = ls('messages'); all.push(msg); ss('messages', all);
+        const ts = ls('threads'), i = ts.findIndex(t => t.id === tid);
+        if (i !== -1) { ts[i].messageCount = (ts[i].messageCount || 0) + 1; ts[i].lastActivity = msg.timestamp; ts[i].lastMessageId = msg.id; ss('threads', ts); }
+      });
+      loadThreads(); if (CT && tids.includes(CT.id)) loadMsgs(CT.id);
+    }
+
+    function saveScheduled(item) {
+      const scheds = JSON.parse(localStorage.getItem('scheduledAnns') || '[]');
+      scheds.push(item);
+      localStorage.setItem('scheduledAnns', JSON.stringify(scheds));
+    }
+
+    function cancelScheduled(id) {
+      let scheds = JSON.parse(localStorage.getItem('scheduledAnns') || '[]');
+      scheds = scheds.filter(s => s.id !== id);
+      localStorage.setItem('scheduledAnns', JSON.stringify(scheds));
+      renderSchedList();
+    }
+
+    function renderSchedList() {
+      const scheds = JSON.parse(localStorage.getItem('scheduledAnns') || '[]');
+      const c = $('schedList'); if (!c) return;
+      if (!scheds.length) { c.innerHTML = '<p style="font-size:13px;color:var(--t3);padding:8px 0;">אין הודעות מתוזמנות</p>'; return; }
+      c.innerHTML = '';
+      scheds.forEach(s => {
+        const d = document.createElement('div'); d.className = 'arow';
+        const threads = ls('threads');
+        const threadNames = s.tids.map(tid => { const t = threads.find(x => x.id === tid); return t ? t.title : tid; }).join(', ');
+        let timeInfo = '';
+        if (s.type === 'once') timeInfo = '⏰ ' + new Date(s.sendAt).toLocaleString('he-IL');
+        else timeInfo = '🔁 כל ' + s.intervalLabel + (s.nextSendAt ? ' · הבא: ' + new Date(s.nextSendAt).toLocaleString('he-IL') : '');
+        d.innerHTML = `<div class="ari">
+   <strong>📢 ${s.title}</strong>
+   <small>${timeInfo}</small>
+   <small style="color:var(--t3);">${threadNames}</small>
+  </div>
+  <button class="mbtn d" style="padding:5px 10px;font-size:12px;" onclick="cancelScheduled('${s.id}')">ביטול</button>`;
+        c.appendChild(d);
+      });
+    }
+
+    function onSchedTypeChange() {
+      const t = $('schedType').value;
+      $('schedOnce').classList.toggle('hidden', t !== 'once');
+      $('schedRepeat').classList.toggle('hidden', t !== 'repeat');
+    }
+
+    // Run scheduled announcements
+    function runScheduler() {
+      const scheds = JSON.parse(localStorage.getItem('scheduledAnns') || '[]');
+      if (!scheds.length) return;
+      let changed = false;
+      const now = Date.now();
+      const updated = scheds.filter(s => {
+        if (s.type === 'once') {
+          if (now >= s.sendAt) { doSendAnn(s.title, s.body, s.tids); changed = true; return false; }
+          return true;
+        } else if (s.type === 'repeat') {
+          while (now >= s.nextSendAt) {
+            doSendAnn(s.title, s.body, s.tids);
+            s.nextSendAt += s.intervalMs; changed = true;
+          }
+          return true;
+        }
+        return true;
+      });
+      if (changed) {
+        localStorage.setItem('scheduledAnns', JSON.stringify(updated));
+        if ($('schedList')) renderSchedList();
+      }
+    }
+    function renderAStats() {
+      const u = ls('users'), m = ls('messages'), t = ls('threads');
+      $('aStats').innerHTML = `
+  <div class="stcard"><div>📧</div><div><div class="stval">${new Set(u.map(x => x.email)).size}</div><div class="stlbl">מיילים</div></div></div>
+  <div class="stcard"><div>👤</div><div><div class="stval">${u.filter(x => !x.deleted).length}</div><div class="stlbl">משתמשים</div></div></div>
+  <div class="stcard"><div>💬</div><div><div class="stval">${m.filter(x => !x.deleted).length}</div><div class="stlbl">הודעות</div></div></div>
+  <div class="stcard"><div>📂</div><div><div class="stval">${t.length}</div><div class="stlbl">נושאים</div></div></div>`;
+    }
+    function adPin(tid) {
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === tid); if (i === -1) return;
+      ts[i].pinned = !ts[i].pinned; ss('threads', ts);
+      if (!isSuper()) notifySuper('pin', ts[i].title);
+      loadThreads(); renderAThreads();
+      if (CT && CT.id === tid) { CT = ts[i]; selectThread(CT); }
+    }
+    function adLock(tid) {
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === tid); if (i === -1) return;
+      ts[i].locked = !ts[i].locked; ss('threads', ts);
+      if (!isSuper()) notifySuper('lock', ts[i].title);
+      loadThreads(); renderAThreads();
+      if (CT && CT.id === tid) { CT = ts[i]; selectThread(CT); }
+    }
+    function adDelThread(tid) {
+      if (!confirm('למחוק?')) return;
+      let ts = ls('threads'); ts = ts.filter(t => t.id !== tid); ss('threads', ts);
+      let m = ls('messages'); m = m.filter(x => x.threadId !== tid); ss('messages', m);
+      if (CT && CT.id === tid) { CT = null; $('chdr').classList.add('hidden'); $('iarea').classList.add('hidden'); $('msgs').innerHTML = '<div class="empty"><div class="ei">💬</div><h3>ברוכים הבאים</h3></div>'; }
+      loadThreads(); renderAThreads();
+    }
+    function adToggleAdmin(uid) {
+      if (uid === CU.id && !isSuper()) { alert('לא ניתן לשנות את עצמך'); return; }
+      if (isSuper(getUser(uid))) { alert('לא ניתן לשנות את המנהל הראשי'); return; }
+      const users = ls('users'), i = users.findIndex(u => u.id === uid); if (i === -1) return;
+      users[i].isAdmin = !users[i].isAdmin; ss('users', users); renderAUsers();
+    }
+    function adRename(uid) {
+      const users = ls('users'), u = users.find(x => x.id === uid); if (!u) return;
+      const nn = prompt('שם חדש:', u.name); if (!nn || nn.trim() === u.name) return;
+      u.name = nn.trim(); u.avatar = nn.trim().charAt(0).toUpperCase();
+      users[users.findIndex(x => x.id === uid)] = u; ss('users', users);
+      const m = ls('messages'); m.forEach(x => { if (x.userId === uid) { x.userName = u.name; x.userAvatar = u.avatar; } }); ss('messages', m);
+      if (CU.id === uid) { CU.name = u.name; CU.avatar = u.avatar; localStorage.setItem('currentUser', JSON.stringify(CU)); $('unm').textContent = u.name; renderUAv(); }
+      if (CT) loadMsgs(CT.id); renderAUsers();
+    }
+    function adToggleBlock(uid) {
+      if (isSuper(getUser(uid))) { alert('לא ניתן לחסום את המנהל הראשי'); return; }
+      const users = ls('users'), i = users.findIndex(u => u.id === uid); if (i === -1) return;
+      users[i].deleted = !users[i].deleted; ss('users', users);
+      notifySuper('block', `${users[i].name} — ${users[i].deleted ? 'נחסם' : 'בוטלה חסימה'}`);
+      renderAUsers();
+    }
+    function adCreateThread() {
+      const title = $('atTitle').value.trim(); if (!title) return;
+      const t = { id: Date.now().toString(), title, description: $('atDesc').value.trim(), createdBy: CU.id, createdAt: new Date().toISOString(), messageCount: 0, lastActivity: new Date().toISOString(), pinned: false, locked: false, lastMessageId: null, lastRead: {} };
+      const ts = ls('threads'); ts.unshift(t); ss('threads', ts);
+      $('atTitle').value = ''; $('atDesc').value = ''; loadThreads(); renderAThreads();
+    }
+    function submitNR() {
+      const nn = $('nmrN').value.trim(), reason = $('nmrR').value.trim();
+      if (!nn || !reason) { alert('מלא הכל'); return; }
+      const reqs = ls('nameRequests');
+      reqs.push({ id: Date.now().toString(), userId: CU.id, userName: CU.name, newName: nn, reason, timestamp: new Date().toISOString(), status: 'pending' });
+      ss('nameRequests', reqs); alert('הבקשה נשלחה!'); closeM('nmrModal');
+    }
+    function appNR(rid) {
+      const reqs = ls('nameRequests'), r = reqs.find(x => x.id === rid); if (!r) return;
+      r.status = 'approved'; ss('nameRequests', reqs); adRenameDirect(r.userId, r.newName); renderARequests();
+    }
+    function rejNR(rid) { const reqs = ls('nameRequests'), r = reqs.find(x => x.id === rid); if (r) { r.status = 'rejected'; ss('nameRequests', reqs); } renderARequests(); }
+    function adRenameDirect(uid, name) {
+      const users = ls('users'), i = users.findIndex(u => u.id === uid); if (i === -1) return;
+      users[i].name = name; users[i].avatar = name.charAt(0).toUpperCase(); ss('users', users);
+      if (CU.id === uid) { CU.name = name; CU.avatar = name.charAt(0).toUpperCase(); localStorage.setItem('currentUser', JSON.stringify(CU)); $('unm').textContent = name; renderUAv(); }
+    }
+    function exportData() { const data = { users: ls('users'), threads: ls('threads'), messages: ls('messages') }; const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })); const a = document.createElement('a'); a.href = url; a.download = `forum-${new Date().toISOString().split('T')[0]}.json`; a.click(); URL.revokeObjectURL(url); }
+    function resetAll() { if (confirm('⚠️ מחיקת כל הנתונים?')) if (confirm('בטוח?')) { localStorage.clear(); location.reload(); } }
+
+
+    // ═══ THREAD ACCESS / HIDDEN THREADS ═══
+    let currentAccessThreadId = null;
+
+    function threadVisibleToUser(t) {
+      if (!CU) return false;
+      // Check if user self-left this thread
+      const left = JSON.parse(localStorage.getItem('leftThreads') || '{}');
+      if ((left[CU.id] || []).includes(t.id) && !isAdmin() && !isSuper()) return false;
+      if (!t.hidden) return true;           // not hidden → visible to all
+      if (isSuper()) return true;           // super always sees
+      if (isAdmin()) return true;           // admins see hidden threads
+      const access = t.allowedUsers || [];
+      return access.includes(CU.id);
+    }
+
+    function adToggleHide(tid) {
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === tid); if (i === -1) return;
+      ts[i].hidden = !ts[i].hidden; ss('threads', ts);
+      loadThreads(); renderAThreads();
+      if (CT && CT.id === tid) {
+        if (!threadVisibleToUser(ts[i])) {
+          CT = null; $('chdr').classList.add('hidden'); $('iarea').classList.add('hidden');
+          $('msgs').innerHTML = '<div class="empty"><div class="ei">💬</div><h3>ברוכים הבאים</h3></div>';
+        } else {
+          CT = ts[i]; selectThread(CT); // refresh header buttons
+        }
+      }
+    }
+
+    function adManageAccess(tid) {
+      currentAccessThreadId = tid;
+      const t = ls('threads').find(x => x.id === tid); if (!t) return;
+      $('accessModalTitle').textContent = 'גישה לנושא: ' + t.title;
+      // Populate user select
+      const sel = $('accessUserSel'); sel.innerHTML = '<option value="">-- בחר משתמש --</option>';
+      const allowed = t.allowedUsers || [];
+      ls('users').filter(u => !u.deleted && !isSuper(u) && !u.isAdmin && !allowed.includes(u.id)).forEach(u => {
+        const o = document.createElement('option'); o.value = u.id; o.textContent = u.name; sel.appendChild(o);
+      });
+      renderAccessList(t);
+      openM('accessModal');
+    }
+
+    function renderAccessList(t) {
+      const c = $('accessList'); c.innerHTML = '';
+      const allowed = t.allowedUsers || [];
+      if (!allowed.length) { c.innerHTML = '<p style="font-size:13px;color:var(--t3);padding:8px 0;">אין משתמשים עם גישה מיוחדת</p>'; return; }
+      allowed.forEach(uid => {
+        const u = getUser(uid); if (!u) return;
+        const d = document.createElement('div'); d.className = 'arow';
+        d.innerHTML = `<div class="ari"><strong>${u.name}</strong><small>${u.email}</small></div>
+   <button class="mbtn d" style="padding:5px 10px;font-size:12px;" onclick="revokeAccess('${uid}')">הסר גישה</button>`;
+        c.appendChild(d);
+      });
+    }
+
+    function grantAccess() {
+      const uid = $('accessUserSel').value; if (!uid) return;
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === currentAccessThreadId); if (i === -1) return;
+      if (!ts[i].allowedUsers) ts[i].allowedUsers = [];
+      if (!ts[i].allowedUsers.includes(uid)) ts[i].allowedUsers.push(uid);
+      ss('threads', ts);
+      adManageAccess(currentAccessThreadId);
+    }
+
+    function revokeAccess(uid) {
+      const ts = ls('threads'), i = ts.findIndex(t => t.id === currentAccessThreadId); if (i === -1) return;
+      ts[i].allowedUsers = (ts[i].allowedUsers || []).filter(x => x !== uid);
+      ss('threads', ts);
+      adManageAccess(currentAccessThreadId);
+    }
+
+    // Thread system removed
+
+    // ═══ CONTACT ADMIN ═══
+    function showContactAdmin() {
+      $('contactAdminTxt').value = '';
+      openM('contactAdminModal');
+    }
+
+    function sendContactAdmin() {
+      const text = $('contactAdminTxt').value.trim();
+      if (!text) { alert('כתוב הודעה'); return; }
+      // Send as DM notification to super admin
+      addNotif(getSuperUid(), {
+        type: 'dm', from: CU.name,
+        text: text.substring(0, 200), threadId: null
+      });
+      // Also save to a special "admin messages" thread if exists
+      const ts = ls('threads');
+      let adminThread = ts.find(t => t.isAdminInbox);
+      if (adminThread) {
+        const msg = {
+          id: Date.now().toString(), threadId: adminThread.id,
+          userId: CU.id, userName: CU.name, userAvatar: CU.avatar,
+          content: `📩 **הודעה מ-${CU.name}:**\n${text}`, isHtml: false,
+          timestamp: new Date().toISOString(), edited: false, reactions: {}, views: [CU.id], poll: null, quotedMessage: null
+        };
+        const all = ls('messages'); all.push(msg); ss('messages', all);
+        const i = ts.findIndex(t => t.id === adminThread.id);
+        if (i !== -1) { ts[i].messageCount = (ts[i].messageCount || 0) + 1; ts[i].lastActivity = msg.timestamp; ts[i].lastMessageId = msg.id; ss('threads', ts); }
+      }
+      alert('ההודעה נשלחה למנהל!');
+      closeM('contactAdminModal');
+    }
+
+    // Show/init admin inbox thread (super admin only)
+    function ensureAdminInbox() {
+      if (!isSuper()) return;
+      const ts = ls('threads');
+      if (!ts.find(t => t.isAdminInbox)) {
+        const t = {
+          id: 'admin-inbox', title: '📩 תיבת הודעות מנהל', description: 'הודעות שנשלחו מהמשתמשים',
+          createdBy: CU.id, createdAt: new Date().toISOString(), messageCount: 0,
+          lastActivity: new Date().toISOString(), pinned: true, locked: true, hidden: true,
+          isAdminInbox: true, lastMessageId: null, lastRead: {},
+          allowedUsers: []
+        };
+        ts.unshift(t); ss('threads', ts);
+      }
+    }
+
+
+    // ═══ RENAME THREAD ═══
+    function adRenameThread(tid) {
+      const ts = ls('threads'), t = ts.find(x => x.id === tid); if (!t) return;
+      const newTitle = prompt('שם חדש לנושא:', t.title);
+      if (!newTitle || newTitle.trim() === t.title) return;
+      const i = ts.findIndex(x => x.id === tid);
+      ts[i].title = newTitle.trim(); ss('threads', ts);
+      loadThreads(); renderAThreads();
+      if (CT && CT.id === tid) { CT = ts[i]; $('ctitle').textContent = CT.title; }
+    }
+
+    // ═══ SELF LEAVE THREAD ═══
+    let leavingThreadId = null;
+    function selfLeaveThread(tid) {
+      const t = ls('threads').find(x => x.id === tid); if (!t) return;
+      if (!confirm(`לעזוב לגמרי את הנושא "${t.title}"?\nהנושא יעלם לך ולא תוכל לראות אותו.\nכדי לחזור תצטרך לשלוח בקשה למנהל.`)) return;
+      // Add to leftThreads — completely removes visibility
+      const left = JSON.parse(localStorage.getItem('leftThreads') || '{}');
+      if (!left[CU.id]) left[CU.id] = [];
+      if (!left[CU.id].includes(tid)) left[CU.id].push(tid);
+      localStorage.setItem('leftThreads', JSON.stringify(left));
+      // Clear current view
+      CT = null;
+      $('chdr').classList.add('hidden');
+      $('iarea').classList.add('hidden');
+      $('lckbar').classList.add('hidden');
+      $('msgs').innerHTML = '<div class="empty"><div class="ei">💬</div><h3>ברוכים הבאים</h3><p>בחרו נושא לשיחה</p></div>';
+      loadThreads();
+      // Save join request automatically
+      const reqs = ls('nameRequests');
+      reqs.push({
+        id: Date.now().toString(), type: 'joinThread',
+        userId: CU.id, userName: CU.name,
+        threadId: tid, threadTitle: t.title,
+        reason: '(עזב מרצון)', timestamp: new Date().toISOString(), status: 'left', autoJoin: true
+      });
+      ss('nameRequests', reqs);
+
+    }
+
+    // ═══ JOIN REQUEST ═══
+    function showJoinRequest(tid) {
+      leavingThreadId = tid;
+      const t = ls('threads').find(x => x.id === tid);
+      $('joinReqThreadName').textContent = `נושא: ${t ? t.title : ''}`;
+      $('joinReqReason').value = '';
+      openM('joinReqModal');
+    }
+    function submitJoinReq() {
+      const reason = $('joinReqReason').value.trim();
+      if (!reason) { alert('כתוב סיבה'); return; }
+      const reqs = ls('nameRequests');
+      reqs.push({
+        id: Date.now().toString(), type: 'joinThread',
+        userId: CU.id, userName: CU.name,
+        threadId: leavingThreadId,
+        reason, timestamp: new Date().toISOString(), status: 'pending'
+      });
+      ss('nameRequests', reqs);
+      addNotif(getSuperUid(), {
+        type: 'dm', from: CU.name,
+        text: `בקשת הצטרפות לנושא מ-${CU.name}: ${reason}`, threadId: null
+      });
+      alert('הבקשה נשלחה למנהל!'); closeM('joinReqModal');
+    }
+
+    // ═══ MUTED THREADS ═══
+    function getMutedThreads() {
+      const muted = JSON.parse(localStorage.getItem('mutedThreads') || '{}');
+      return muted[CU.id] || [];
+    }
+    function isThreadMuted(tid) { return getMutedThreads().includes(tid); }
+    function toggleMuteThread(tid) {
+      const muted = JSON.parse(localStorage.getItem('mutedThreads') || '{}');
+      if (!muted[CU.id]) muted[CU.id] = [];
+      const idx = muted[CU.id].indexOf(tid);
+      if (idx === -1) muted[CU.id].push(tid);
+      else muted[CU.id].splice(idx, 1);
+      localStorage.setItem('mutedThreads', JSON.stringify(muted));
+      loadThreads();
+      if (CT && CT.id === tid) selectThread(CT);
+    }
+    function toggleMutedList() {
+      const list = $('mutedList'), arrow = $('mutedArrow');
+      const open = !list.classList.contains('hidden');
+      list.classList.toggle('hidden', open);
+      arrow.textContent = open ? '▸' : '▾';
+    }
+    function renderMutedSection() {
+      const mutedIds = getMutedThreads();
+      const sec = $('mutedSection'), list = $('mutedList'), cnt = $('mutedCount');
+      if (!mutedIds.length) { sec.classList.add('hidden'); return; }
+      sec.classList.remove('hidden');
+      cnt.textContent = mutedIds.length;
+      list.innerHTML = '';
+      const allThreads = ls('threads');
+      mutedIds.forEach(tid => {
+        const t = allThreads.find(x => x.id === tid); if (!t || !threadVisibleToUser(t)) return;
+        const el = document.createElement('div');
+        el.className = 'ti muted' + (CT && CT.id === tid ? ' active' : '');
+        el.dataset.tid = tid;
+        el.innerHTML = `<div class="tt">🔕 ${t.title}</div><div class="tm">${fmtDate(t.lastActivity)}</div>`;
+        el.onclick = () => selectThread(t);
+        list.appendChild(el);
+      });
+    }
+
+
+    // ═══ GOOGLE AUTH ═══
+    let pendingGoogleUser = null;
+
+    function doGoogleAuth() {
+      // Use Google Identity Services popup
+      if (typeof google === 'undefined') {
+        alert('טוען את Google... נסה שוב עוד רגע.');
+        return;
+      }
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: '908669720823-45vtu2e2gi2b3tmglqn0mnspq077ji4d.apps.googleusercontent.com',
+        scope: 'email profile',
+        callback: handleGoogleToken,
+      });
+      client.requestAccessToken();
+    }
+
+    async function handleGoogleToken(resp) {
+      if (resp.error) { console.error(resp); return; }
+      try {
+        const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: 'Bearer ' + resp.access_token }
+        });
+        const info = await r.json();
+        const email = info.email;
+        const googleName = info.name || email.split('@')[0];
+        const googleAvatar = info.picture || null;
+        // Check whitelist
+        if (!isEmailAllowed(email)) {
+          $('lErr').textContent = '❌ המייל שלך אינו מורשה להיכנס לאתר זה. פנה למנהל.';
+          $('lErr').classList.remove('hidden');
+          return;
+        }
+        // Check if user exists
+        const users = ls('users');
+        const existing = users.find(u => u.email.toLowerCase() === email.toLowerCase() && !u.deleted);
+        if (existing) {
+          // Login directly
+          CU = existing;
+          localStorage.setItem('currentUser', JSON.stringify(CU));
+          localStorage.setItem('rem', '1');
+          sessionStorage.setItem('sa', '1');
+          showApp(); startPolling();
+        } else {
+          // New user — show name picker
+          pendingGoogleUser = { email, googleName, googleAvatar };
+          $('googleNameInput').value = googleName;
+          if (googleAvatar) {
+            $('googleAvatarPreview').innerHTML = `<img src="${googleAvatar}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:3px solid var(--p);">`;
+          }
+          $('googleNameScreen').classList.add('open');
+        }
+      } catch (e) { console.error(e); alert('שגיאה בהתחברות עם Google'); }
+    }
+
+    function confirmGoogleName() {
+      if (!pendingGoogleUser) return;
+      const name = $('googleNameInput').value.trim();
+      if (!name || name.length < 2) { $('gnErr').textContent = 'שם חייב להיות לפחות 2 תווים'; $('gnErr').classList.remove('hidden'); return; }
+      const users = ls('users');
+      const nu = {
+        id: Date.now().toString(), name, email: pendingGoogleUser.email,
+        password: btoa('google-' + pendingGoogleUser.email), // unusable pw
+        isAdmin: false, avatar: name.charAt(0).toUpperCase(),
+        profileImage: pendingGoogleUser.googleAvatar, googleAuth: true,
+        status: '', deleted: false, createdAt: new Date().toISOString(), perms: {}
+      };
+      users.push(nu); ss('users', users);
+      CU = nu;
+      localStorage.setItem('currentUser', JSON.stringify(CU));
+      localStorage.setItem('rem', '1');
+      sessionStorage.setItem('sa', '1');
+      $('googleNameScreen').classList.remove('open');
+      pendingGoogleUser = null;
+      showApp(); startPolling();
+    }
+
+    // ═══ YOUTUBE PLAYER ═══
+    function extractYTId(url) {
+      const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/))([-\w]{11})/);
+      return m ? m[1] : null;
+    }
+    function openYT(videoId, title) {
+      $('ytFrame').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      $('ytTitle').textContent = title || 'YouTube';
+      $('ytPlayer').classList.add('open');
+    }
+    function closeYT() {
+      $('ytPlayer').classList.remove('open');
+      $('ytFrame').src = '';
+    }
+
+    // ═══ VIDEO UPLOAD ═══
+    function handleVidSelect(e) {
+      const f = e.target.files[0]; if (!f) return;
+      if (!f.type.startsWith('video/')) { alert('רק קבצי וידאו'); return; }
+      if (f.size > 50 * 1024 * 1024) { alert('קובץ גדול מדי (מקסימום 50MB)'); return; }
+      const r = new FileReader();
+      r.onload = ev => {
+        pendingVideo = ev.target.result;
+        const bar = $('iprev'); bar.classList.remove('hidden');
+        bar.innerHTML = `
+   <video src="${ev.target.result}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;" muted></video>
+   <span class="iprevn">🎬 ${f.name}</span>
+   <button class="iprevrm" onclick="clearVidPrev()">×</button>`;
+        $('sbtn').disabled = false;
+      };
+      r.readAsDataURL(f);
+      e.target.value = '';
+    }
+    function clearVidPrev() {
+      pendingVideo = null;
+      const b = $('iprev'); b.classList.add('hidden'); b.innerHTML = '';
+    }
+
+
+
+    // ═══ WHITELIST ═══
+    function getWhitelist() {
+      return JSON.parse(localStorage.getItem('whitelist') || '[]');
+    }
+    function isEmailAllowed(email) {
+      if (!email) return false;
+      // Super admin always allowed
+      if (email.toLowerCase() === SUPER_EMAIL.toLowerCase()) return true;
+      const wl = getWhitelist();
+      // If whitelist is empty, nobody can register (except super)
+      if (!wl.length) return false;
+      return wl.some(e => e.toLowerCase() === email.toLowerCase());
+    }
+    function addToWhitelist() {
+      const inp = $('wlEmailInput');
+      const email = inp.value.trim().toLowerCase();
+      if (!email || !email.includes('@')) { alert('הכנס מייל תקין'); return; }
+      const wl = getWhitelist();
+      if (wl.includes(email)) { alert('מייל זה כבר ברשימה'); return; }
+      wl.push(email); localStorage.setItem('whitelist', JSON.stringify(wl)); fsSaveDoc('meta', 'whitelist', { list: wl });
+      inp.value = ''; renderWhitelist();
+    }
+    function removeFromWhitelist(email) {
+      const wl = getWhitelist().filter(e => e !== email);
+      localStorage.setItem('whitelist', JSON.stringify(wl)); fsSaveDoc('meta', 'whitelist', { list: wl });
+      renderWhitelist();
+    }
+    function renderWhitelist() {
+      const wl = getWhitelist();
+      const c = $('wlList'); if (!c) return;
+      if (!wl.length) {
+        c.innerHTML = '<p style="font-size:13px;color:var(--t3);padding:8px 0;">אין מיילים מורשים — אף אחד לא יכול להתחבר (חוץ ממנהל ראשי)</p>';
+        return;
+      }
+      c.innerHTML = '';
+      wl.forEach(email => {
+        const d = document.createElement('div'); d.className = 'arow';
+        d.innerHTML = `<div class="ari"><strong>${email}</strong></div>
+          <button class="mbtn d" style="padding:5px 10px;font-size:12px;" onclick="removeFromWhitelist('${email}')">הסר</button>`;
+        c.appendChild(d);
+      });
+    }
+
+    // ═══ LIGHTBOX, SCROLL, MODAL ═══
+    function openLB(src) { $('lbImg').src = src; $('lb').classList.add('open'); }
+    function closeLB() { $('lb').classList.remove('open'); }
+    function scrollLast() { const c = $('msgs'); c.scrollTop = c.scrollHeight; $('scrollBtn').style.display = 'none'; }
+    function updScrollBtn() { const c = $('msgs'); $('scrollBtn').style.display = c.scrollHeight - c.scrollTop - c.clientHeight > 200 ? 'block' : 'none'; }
+    function openM(id) { $(id).classList.add('open'); }
+    function closeM(id) { $(id).classList.remove('open'); }
+    function toggleMobileMenu() { $('sidebar').classList.toggle('open'); }
+
+    // ═══ UTILS ═══
+    function fmtDate(ds) { const d = new Date(ds), n = new Date(), df = n - d; if (df < 60000) return 'עכשיו'; if (df < 3600000) return `${Math.floor(df / 60000)} דק'`; if (df < 86400000) return `${Math.floor(df / 3600000)} שע'`; return d.toLocaleDateString('he-IL'); }
+    function fmtTime(ds) { return new Date(ds).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }); }
+  </script>
+
+
+  <!-- YouTube Float Player -->
+  <div id="ytPlayer">
+    <div class="yt-bar">
+      <span id="ytTitle">YouTube</span>
+      <button class="yt-close" onclick="closeYT()">×</button>
+    </div>
+    <iframe id="ytFrame" src="" allowfullscreen allow="autoplay"></iframe>
+  </div>
+  <!-- Google Name Picker -->
+  <div id="googleNameScreen">
+    <div class="ac" style="max-width:380px;">
+      <div class="alo">
+        <div style="font-size:40px;margin-bottom:10px;">👋</div>
+        <h1>ברוך הבא!</h1>
+        <p>בחר שם שיוצג בפלטפורמה</p>
+      </div>
+      <div id="googleAvatarPreview" style="text-align:center;margin-bottom:14px;"></div>
+      <div class="fg"><label>שם תצוגה</label><input type="text" id="googleNameInput" placeholder="השם שלך בפלטפורמה"
+          maxlength="30"></div>
+      <button class="btnp" onclick="confirmGoogleName()">המשך</button>
+      <div id="gnErr" class="err hidden"></div>
+    </div>
+  </div>
+</body>
+
+</html>
